@@ -455,7 +455,8 @@
           var service = window.encodeURIComponent("https://hotznn.github.io");
           ajax.get("https://www.bimwook.com/woo/sso/validation.do?service=" + service + "&ticket=" + ticket, function(data, error){
             console.log(data);
-            window.location.search = "";
+            window.history.pushState({},0,"https://hotznn.github.io/");	
+            //window.location.search = "";
           });
         }
       }
