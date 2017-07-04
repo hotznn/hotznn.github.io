@@ -421,8 +421,13 @@
       ui.callback = function(o){
         var uname = com.id("uname");
         var avatar = com.id("avatar");
-        uname.html(window.decodeURIComponent(o.nick));
-        avatar.src="https://www.bimwook.com/woo/avatar/icon.png?uid=" + o.uid;
+        avatar.onclick = function(){
+          window.location.replace("https://www.bimwook.com/woo/sso/security.do?service=" + window.encodeURIComponent("https://hotznn.github.io")); 
+        }
+        if(o.uid.length>0){
+          uname.html(window.decodeURIComponent(o.nick));
+          avatar.src="https://www.bimwook.com/woo/avatar/icon.png?uid=" + o.uid;
+        }
       };
       
       ui.load = function(){
