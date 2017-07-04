@@ -432,7 +432,7 @@
       
       ui.load = function(){
         var me = this;
-        ajax.get('./data/list.txt', function(data, err){
+        ajax.get('./data/list.txt', function(data, error){
            try{
              var o = JSON.parse(data);
              me.sort(o, function(list){
@@ -446,6 +446,14 @@
              console.log('网络请求失败');
            }
         })
+        var mc = window.location.search.match(/ticket=(ST-\d{3}-\d{40}-SSO)/);
+        if(mc){
+          var ticket = mc[1];
+          var service = window.encodeURIComponent("https://hotznn.github.io"));
+          ajax.get("https://www.bimwook.com/woo/sso/validation.do?service=" + service + "&ticket=" + ticket, function(data, error){
+            console.log(data);
+          });
+        }
       }
       ui.load();
     </script>
