@@ -418,6 +418,13 @@
         })
       }
       
+      ui.callback = function(o){
+        var uname = com.id("uname");
+        var avatar = com.id("avatar");
+        uname.html(o.nick);
+        avatar.src="https://www.bimwook.com/woo/avatar/icon.png?uid=" + o.uid;
+      };
+      
       ui.load = function(){
         var me = this;
         ajax.get('./data/list.txt', function(data, err){
@@ -437,5 +444,6 @@
       }
       ui.load();
     </script>
+    <script type="text/javascript" src="https://www.bimwook.com/woo/uid.js?callback=ui.callback"></script>
   </body>
 </html>
