@@ -421,7 +421,7 @@
       ui.callback = function(o){
         var uname = com.id("uname");
         var avatar = com.id("avatar");
-        uname.html(o.nick);
+        uname.html(window.decodeURIComponent(o.nick));
         avatar.src="https://www.bimwook.com/woo/avatar/icon.png?uid=" + o.uid;
       };
       
