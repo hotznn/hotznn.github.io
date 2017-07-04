@@ -425,8 +425,11 @@
           window.location.replace("https://www.bimwook.com/woo/sso/security.do?service=" + window.encodeURIComponent("https://hotznn.github.io")); 
         }
         if(o.uid.length>0){
-          uname.html(window.decodeURIComponent(o.nick));
-          avatar.src="https://www.bimwook.com/woo/avatar/icon.png?uid=" + o.uid;
+          var nick = window.decodeURIComponent(o.nick);
+          uname.html(nick);
+          avatar.alt = nick;
+          avatar.src = "https://www.bimwook.com/woo/avatar/icon.png?uid=" + o.uid;
+          document.title = "起始页 - " + nick;
         }
       };
       
@@ -452,6 +455,7 @@
           var service = window.encodeURIComponent("https://hotznn.github.io");
           ajax.get("https://www.bimwook.com/woo/sso/validation.do?service=" + service + "&ticket=" + ticket, function(data, error){
             console.log(data);
+            window.location.search = "";
           });
         }
       }
