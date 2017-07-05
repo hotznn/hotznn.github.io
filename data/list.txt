@@ -99,12 +99,6 @@
       "url": "https://www.bimwook.com/woo/www/index.html"
     },
     {
-      "rowid": "1605225146361581888622515797563228840316",
-      "name": "13800",
-      "rank": 0,
-      "url": "https://www.bimwook.com:13800/home/write.html"
-    },
-    {
       "rowid": "0646473395161031906127156184890816472725",
       "name": "花瓣",
       "rank": 0,
@@ -145,18 +139,6 @@
       "name": "水木社区",
       "rank": 0,
       "url": "http://www.newsmth.net/nForum/mainpage/"
-    },
-    {
-      "rowid": "1153037827029101733024795722041822300975",
-      "name": "国网数据",
-      "rank": 0,
-      "url": "http://www.data.top/"
-    },
-    {
-      "rowid": "3950896199394421907822678650464126880700",
-      "name": "华声论坛",
-      "rank": 0,
-      "url": "https://bbs.voc.com.cn/"
     },
     {
       "rowid": "3898299326359241895425984753950957890632",
@@ -213,12 +195,6 @@
       "url": "https://2.taobao.com"
     },
     {
-      "rowid": "3580066789521731945223776674640147045660",
-      "name": "StartSSL",
-      "rank": 0,
-      "url": "https://www.startcomca.com/"
-    },
-    {
       "rowid": "0471095243317881906521630040880750470361",
       "name": "网易云音乐",
       "rank": 0,
@@ -228,11 +204,11 @@
       "rowid": "3323385144634125667723744964482195738863",
       "name": "Yesterday",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mnt/radio/timeline.htm?date=yesterday"
+      "url": "https://www.bimwook.com/woo/www/mnt/radio/index.htm?date=yesterday"
     },
     {
       "rowid": "2344496497267285549229476179032333426765",
-      "name": "RedDit",
+      "name": "reddit",
       "rank": 0,
       "url": "https://www.reddit.com"
     },
@@ -367,18 +343,6 @@
       "name": "Cache",
       "rank": 0,
       "url": "https://www.bimwook.com/woo/var/cache.htm"
-    },
-    {
-      "rowid": "0087937212193065851226127374460906439340",
-      "name": "Cruiser-Add",
-      "rank": 0,
-      "url": "https://www.bimwook.com/woo/resource/show.do?rowid=1389701547537616142530485119552252835885"
-    },
-    {
-      "rowid": "3356726515621581655925420722263517402543",
-      "name": "NOTE",
-      "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/box/note.html"
     },
     {
       "rowid": "0503247520536862333231949789160725119531",
