@@ -423,7 +423,7 @@
           })
           callback(ret);          
         }
-        var data = this.local.getItem("start.index")||"";
+        var data = this.local.getItem("start.indexed")||"";
         if(data==""){     
           ajax.get("./data/sort.txt", function(data, error){
             if(error) return;
