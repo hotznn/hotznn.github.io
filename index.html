@@ -253,6 +253,15 @@
       }
       var ui = {};
       ui.service = window.location.protocol + "//" + window.location.host;
+      ui.local = window.localStorage || {
+        data: {},
+        setItem: function(key, value) {
+          this.data[key] = value;
+        },
+        getItem: function(key) {
+          return this.data[key]
+        }
+      };
       ui.evt = {};
       ui.evt.timer = null;
       ui.evt.drag = false;
@@ -322,6 +331,7 @@
         if(evt.target && evt.dom){
           evt.target.className = "";
           ui.container.insertBefore(evt.dom, evt.target);
+          ui.buildorder();
         }
         
         if(evt.dom){
@@ -393,11 +403,7 @@
       ui.items = [];
       ui.sort = function(o, callback){
         var me = this;
-        ajax.get("./data/sort.txt", function(data, error){
-          if(error) return;
-          var p = data.indexOf('\n\n');
-          if(p==-1) return;
-          var list = data.slice(p+2).split('\n');
+        function run(list){
           var all = new Hash();
           var ret = new List();
           for(var i=0; i<o.items.length; i++){
@@ -415,10 +421,33 @@
               ret.push(item);
             }
           })
-          callback(ret);
-        })
+          callback(ret);          
+        }
+        var data = this.local.getItem("start.index")||"";
+        if(data==""){     
+          ajax.get("./data/sort.txt", function(data, error){
+            if(error) return;
+            var p = data.indexOf('\n\n');
+            if(p==-1) return;
+            var list = data.slice(p+2).split('\n');
+            run(list);
+          })
+        }
+        else{
+            var list = data.split('\n');
+            run(list);
+        }
       }
-      
+      ui.buildorder = function(){
+        var list =  this.container.getElementsByTagName("li");
+        var rowids = [];
+        for(var i=0; i<list.length; i++){
+          var li = list[i];
+          rowids.push(li.data.rowid);
+        }
+        this.local.setItem('start.indexed', rowids.join('\n'));
+      }
+
       ui.callback = function(o){
         var me = this;
         var uname = com.id("uname");
