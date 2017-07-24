@@ -427,9 +427,10 @@
         if(data==""){     
           ajax.get("./data/sort.txt", function(data, error){
             if(error) return;
-            var p = data.indexOf('\n\n');
+            var text = data.replace(/\r/g,"");
+            var p = text.indexOf('\n\n');
             if(p==-1) return;
-            var list = data.slice(p+2).split('\n');
+            var list = text.slice(p+2).split('\n');
             run(list);
           })
         }
