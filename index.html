@@ -454,13 +454,13 @@
         var uname = com.id("uname");
         var avatar = com.id("avatar");
         avatar.onclick = function(){
-          window.location.replace("https://www.bimwook.com/woo/sso/security.do?service=" + window.encodeURIComponent(me.service)); 
+          window.location.replace("https://www.bimwook.com:11180/woo/sso/security.do?service=" + window.encodeURIComponent(me.service)); 
         }
         if(o.uid.length>0){
           var nick = window.decodeURIComponent(o.nick);
           uname.html(nick);
           avatar.alt = nick;
-          avatar.src = "https://www.bimwook.com/woo/avatar/icon.png?uid=" + o.uid;
+          avatar.src = "https://www.bimwook.com:11180/woo/avatar/icon.png?uid=" + o.uid;
           document.title = "起始页 - " + nick;
         }
       };
@@ -485,7 +485,7 @@
         if(mc){
           var ticket = mc[1];
           var service = window.encodeURIComponent(me.service);
-          ajax.get("https://www.bimwook.com/woo/sso/validation.do?service=" + service + "&ticket=" + ticket, function(data, error){
+          ajax.get("https://www.bimwook.com:11180/woo/sso/validation.do?service=" + service + "&ticket=" + ticket, function(data, error){
             console.log(data);
             window.history.pushState({},0, me.service);	
             //window.location.search = "";
@@ -494,6 +494,6 @@
       }
       ui.load();
     </script>
-    <script type="text/javascript" src="https://www.bimwook.com/woo/uid.js?callback=ui.callback"></script>
+    <script type="text/javascript" src="https://www.bimwook.com:11180/woo/uid.js?callback=ui.callback"></script>
   </body>
 </html>
