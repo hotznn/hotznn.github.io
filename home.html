@@ -12,7 +12,7 @@
       var ui = {};
       ui.serverid = "1106998678468001895030322068211092689070";
       ui.go = function(domain){
-        var url = "/woo/about.do";
+        var url = domain + "/woo/about.do";
         ajax.get(url, function(data, error){
           if( (!error) && ((data||"").indexOf(ui.serverid)>-1) ){
             window.location = domain + "/woo/www/start.html";
