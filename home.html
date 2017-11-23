@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Loading...</title>
+  </head>
+  <script type="text/javascript" src="./js/ajax.js"></script>
+  <body>
+    <div style="text-align: center; padding: 2em 1em;">正在检测网络配置...</div>
+    <div style="text-align: center; padding: 2em 1em;">Checking Network Settings...</div>
+    <script type="text/javascript">
+      var ui = {};
+      ui.serverid = "1106998678468001895030322068211092689070";
+      ui.go = function(domain){
+        var url = "/woo/about.do";
+        ajax.get(url, function(data, error){
+          if( (!error) && ((data||"").indexOf(ui.serverid)>-1) ){
+            window.location = domain + "/woo/www/start.html";
+          }
+        });
+      };
+      ui.go("https://local.bimwook.com");
+      ui.go("https://www.bimwook.com:11180");
+    </script>
+  </body>
+</html>
