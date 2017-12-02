@@ -468,7 +468,7 @@
       };
       ui.soon = {};
       ui.soon.load = function(o){
-        ajax.get(ui.host + "/woo/bin/soon/recent.do?uid=" + o.id, function(data, err){
+        ajax.get(ui.host + "/woo/bin/soon/recent.do?uid=" + o.uid, function(data, err){
           var mc = (data||"").match(/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\|(.*)$/);
           if(mc){
             var umemo = com.id("umemo");
