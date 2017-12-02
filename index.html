@@ -459,6 +459,7 @@
         }
         if(o.uid.length>0){
           var nick = window.decodeURIComponent(o.nick);
+          me.soon.load(o);
           uname.html(nick);
           avatar.alt = nick;
           avatar.src = me.host + "/woo/avatar/icon.png?uid=" + o.uid;
