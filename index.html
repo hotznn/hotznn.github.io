@@ -487,7 +487,8 @@
           var service = window.encodeURIComponent(me.service);
           ajax.get("https://www.bimwook.com:11180/woo/sso/validation.do?service=" + service + "&ticket=" + ticket, function(data, error){
             console.log(data);
-            window.history.pushState({},0, me.service);	
+            window.history.replaceState({},0, "index.html");
+            //window.history.pushState({},0, me.service);	
             //window.location.search = "";
           });
         }
