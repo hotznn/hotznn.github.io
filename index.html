@@ -190,6 +190,12 @@
           }
           this.innerHTML = value;
         };
+        ret.text = function(value){
+          if(value===undefined){
+            return this.innerText;
+          }
+          this.innerText = value;
+        };
         ret.append = function(o){
           this.appendChild(o);
         };
