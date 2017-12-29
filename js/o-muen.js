@@ -1,5 +1,13 @@
 -function(w){
   var fn = {};
+  fn.json = function(o){
+    try{
+      return JSON.parse(o.text);
+    }
+    catch(e){
+      return null;
+    }
+  }
   fn.go = function(method, url, data, callback){
     var xhr = new XMLHttpRequest();
     var f = typeof(callback)=="function"? callback : function(o){};
@@ -8,13 +16,13 @@
       xhr = null;
     }
     xhr.onerror = function(e){
-      done({text: "", data: this.response, error: "Network-Error", headers: []});
+      done({text: "", data: this.response, error: "Network-Error", headers: [], json: function(){return null;}});
     }
     xhr.onabort = function(){
-      done({text: "", data: this.response, error: "User-Abort", headers: []});
+      done({text: "", data: this.response, error: "User-Abort", headers: [], json: function(){return null;}});
     }    
     xhr.ontimeout = function(){
-      done({text: "", data: this.response, error: "Time-Out", headers: []});
+      done({text: "", data: this.response, error: "Time-Out", headers: [], json: function(){return null;}});
     }
 
     xhr.onload = function(){
@@ -24,7 +32,7 @@
         var m = row.match(/^([^:]*):(.*)$/);
         headers.push({name: m[1].trim(), value: m[2].trim() });
       });
-      done({text: this.responseText, data: this.response, error: null, headers: headers});
+      done({text: this.responseText, data: this.response, error: null, headers: headers, json: function(){ return fn.json(this); }});
     }
     xhr.open(method||"GET", url, true);
     if(method=="POST"){
