@@ -1,4 +1,4 @@
-{
+﻿{
   "uid": "skirtor",
   "now": "2017-07-01 18:01:28",
   "items": [
@@ -6,13 +6,13 @@
       "rowid": "1609576472051761695027951906101971448274",
       "name": "八月远方",
       "rank": 2147483647,
-      "url": "https://www.bimwook.com"
+      "url": "https://www.bimwook.com:11180"
     },
     {
       "rowid": "3581191353108081728930824760110940970328",
       "name": "关于",
       "rank": 2147483647,
-      "url": "https://www.bimwook.com/woo/about.do"
+      "url": "https://www.bimwook.com:11180/woo/about.do"
     },
     {
       "rowid": "0691181158106291844629046501803946286049",
@@ -72,19 +72,19 @@
       "rowid": "2473555524619401938325949478580783075952",
       "name": "今日经文",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mobile/today.htm"
+      "url": "https://www.bimwook.com:11180/woo/www/mobile/today.htm"
     },
     {
       "rowid": "0750889824649821802122359944490341550280",
       "name": "Radio",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mnt/radio/index.html"
+      "url": "https://www.bimwook.com:11180/woo/www/mnt/radio/index.html"
     },
     {
       "rowid": "1204691064373991736624617449343068634102",
       "name": "我的工作台",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/index.html"
+      "url": "https://www.bimwook.com:11180/woo/www/index.html"
     },
     {
       "rowid": "0646473395161031906127156184890816472725",
@@ -108,7 +108,7 @@
       "rowid": "3230804400174451945221812542604215235471",
       "name": "Memo",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mnt/memo/main.htm"
+      "url": "https://www.bimwook.com:11180/woo/www/mnt/memo/index.html"
     },
     {
       "rowid": "3343283974158691916122712276823868388488",
@@ -168,7 +168,7 @@
       "rowid": "3323385144634125667723744964482195738863",
       "name": "Yesterday",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mnt/radio/index.htm?date=yesterday"
+      "url": "https://www.bimwook.com:11180/woo/www/mnt/radio/index.htm?date=yesterday"
     },
     {
       "rowid": "2344496497267285549229476179032333426765",
@@ -216,7 +216,7 @@
       "rowid": "4059971240111363063723799361221406666179",
       "name": "热点",
       "rank": 0,
-      "url": "https://www.bimwook.com/www/hot.html"
+      "url": "https://www.bimwook.com:11180/www/hot.html"
     },
     {
       "rowid": "0646479535286285924428730137902561801132",
@@ -252,7 +252,7 @@
       "rowid": "3218349934051802443228613999930279318620",
       "name": "最新动态",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mnt/radio/index.html"
+      "url": "https://www.bimwook.com:11180/woo/www/mnt/radio/index.html"
     },
     {
       "rowid": "4242583002133446383323844853684102060235",
@@ -282,13 +282,13 @@
       "rowid": "1752297940332561733631900000681328275861",
       "name": "Cache",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/var/cache.htm"
+      "url": "https://www.bimwook.com:11180/woo/var/cache.html"
     },
     {
       "rowid": "0503247520536862333231949789160725119531",
       "name": "二维码",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mnt/d2.htm"
+      "url": "https://www.bimwook.com:11180/woo/www/mnt/d2.html"
     },
     {
       "rowid": "3156717878090362708722529786680184671098",
@@ -300,7 +300,7 @@
       "rowid": "1282322740482845098422924421030450887641",
       "name": "发现",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/var/discover.html"
+      "url": "https://www.bimwook.com:11180/woo/var/discover.html"
     },
     {
       "rowid": "3637161870088046442526290384532044003305",
@@ -336,7 +336,7 @@
       "rowid": "4210555076608882669821476072580987082543",
       "name": "O-MUEN",
       "rank": 0,
-      "url": "https://www.bimwook.com/woo/www/mnt/omuen/index.html"
+      "url": "https://www.bimwook.com:11180/woo/www/mnt/omuen/index.html"
     },
     {
       "rowid": "1702651139471332684526588383773942283140",
@@ -348,13 +348,13 @@
       "rowid": "3682944679086305228622786105012237032509",
       "name": "工作台",
       "rank": 0,
-      "url": "https://io.bimwook.com/"
+      "url": "https://io.bimwook.com:11180/"
     },
     {
       "rowid": "0746204036322875228626433806382926179270",
       "name": "Hello",
       "rank": 0,
-      "url": "https://www.bimwook.com/hello/index.html"
+      "url": "https://www.bimwook.com:11180/hello/index.html"
     },
     {
       "rowid": "",
