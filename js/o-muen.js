@@ -224,15 +224,21 @@
       x.on = function (name, callback) {
         var me = this;
         this.foreach(function(item){
-          me.events.push(bind(item, name, callback));
+          item.events = item.events ||[];
+          item.events.push(bind(item, name, callback));
         });
         return this;
       };
       x.off = function(){
-        this.events.map(function(evt){
-          unbind(evt.item, evt.name, evt.callback);
+        this.foreach(function(item){
+          if(item.events){
+            for(var i=0; i<item.events.length; i++){
+              var evt = item.events[i];
+              unbind(evt.item, evt.name, evt.callback);
+            }
+          }
+          item.events = [];
         });
-        this.events = [];
         return this;
       }
       return x;
@@ -241,10 +247,10 @@
   }(woo.modules);
 
   //ready
-  woo.ready = true;
+  woo.finished = true;
 }(function(){
   var meta = {
-    ready: false,
+    finished: false,
     modules: [],
     add: function(name, module){
       this.modules.push({name: name, module: module});
@@ -277,10 +283,10 @@
       }
     } 
   });
-  define(woo, "ready", {
-    get: function (){return meta.ready},
+  define(woo, "finished", {
+    get: function (){return meta.finished},
     set: function(v){
-      meta.ready = v;
+      meta.finished = v;
       if(v){
         meta.build();
       }
