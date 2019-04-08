@@ -1,1 +1,1 @@
-![img](shez.jpg)
+![img](avatar.svg)
