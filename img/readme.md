@@ -1,1 +1,1 @@
-![img](avatar.svg)
+![img](./avatar.svg)
