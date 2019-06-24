@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Avatar</title>
+    <style type="text/css">
+      html {
+        margin: 0;
+        padding: 0;
+        background-color: #DDDDDD;
+        height: 100%;
+      }
+      
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 64px 128px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: #FAFAFA;
+        width: 1280px;
+        margin: 0 auto;
+        overflow: hidden;
+        height: 100%;
+      }
+      
+      .box {
+        box-sizing: border-box;
+        position: relative;
+        width: 500px;
+        height: 500px;
+        background-color: white;
+        overflow: hidden;
+        float: left;
+      }
+      
+      .box img {
+        position: absolute;
+      }
+      
+      .box img.full {
+        opacity: 0.3;
+      }
+      
+      .mask {
+        cursor: move;
+        position: absolute;
+        box-sizing: border-box;
+        border: solid 1px rgba(128, 128, 128, 0.8);
+        width: 256px;
+        height: 256px;
+        left: 50%;
+        top: 50%;
+        margin: -128px 0 0 -128px;
+        z-index: 10;
+      }
+      
+      .button {
+        height: 32px;
+        color: white;
+        background-color: #008080;
+        vertical-align: middle;
+        line-height: 32px;
+        margin: 0;
+        padding: 0 16px;
+        text-align: center;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        font-family: verdana;
+        font-size: 14px;
+        -webkit-appearance: none;
+      }
+      .button:active {
+        background-color: #00C0C0;
+      }
+      hr {
+        height: 1px;
+        border: none;
+        background-color: #DDDDDD;
+      }
+      
+      #url {
+        width: 320px;
+        border: solid 1px #DDDDDD;
+        margin: 0;
+        padding: 0 8px;
+        height: 32px;
+        line-height: 32px;
+        outline: none;
+        vertical-align: middle;
+      }
+      
+      #zoomer {
+        display: none;
+      }
+      
+      #canvas {
+        float: left;
+        margin-left: 16px;
+      }
+      label {
+        display: inline-block;
+      }
+      #local {
+        display: none;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <input id="url" type="text" value="./img/shez.jpg" style="display:none;" />
+    <input type="file" id="local" /> 
+    <label for="local" class="button">Load</label>
+    <button class="button" onclick="ui.reload(com.id('url').value);" style="display:none;">Load</button>
+    <button class="button" onclick="ui.reset();">Reset</button>
+    <button class="button" onclick="ui.save();">Save</button>
+    <hr />
+    <br />
+    <div id="box" class="box">
+      <div id="mask" class="mask"></div>
+      <img id="full" class="full" src="./img/opacity.png" alt="" />
+      <img id="img" class="clip" src="./img/opacity.png" alt="" />
+    </div>
+    <canvas id="zoomer"></canvas>
+    <canvas id="canvas-256" width="256" height="256"></canvas>
+    <canvas id="canvas-128" width="128" height="128"></canvas>
+    <script type="text/javascript">
+      -function(){
+        var $ = function(id){
+          return {
+            dom: typeof(id)=="string"?document.querySelector(id):id,
+            html: function(data){
+              var me = this;
+              if(typeof(data)=="string"){
+                me.dom.innerHTML = data;
+              }
+              else {
+                return me.dom.innerHTML;
+              }
+            },
+            text: function(data){
+              var me = this;
+              if(typeof(data)=="string"){
+                me.dom.innerText = data;
+              }
+              else {
+                return me.dom.innerText;
+              }
+            },
+            append: function(node){
+              this.dom.appendChild(node);
+            },
+            on: function(evt, fn) {
+              var bind = function(object, eventType, fun) {
+                var args = Array.prototype.slice.call(arguments).slice(2);
+                var fn = function(event) {
+                  return fun.apply(object, [event || window.event].concat(args));
+                }
+                if (object.addEventListener) {
+                  object.addEventListener(eventType, fn, false);
+                }
+                else if (object.attachEvent) {
+                  object.attachEvent("on" + eventType, fn);
+                }
+                else {
+                  object["on" + eventType] = fn;
+                }
+                return fn;
+              };
+              return bind(this.dom, evt, fn);
+            }
+            
+          }
+        };
+        var vx = {};
+        vx.img = $("#img").dom;
+        vx.mask = $("#mask").dom;
+        vx.drawavatar = function() {
+          var img = this.img;
+          var mask = this.mask;
+          var zoomer = $("#zoomer").dom;
+
+          var ctxzoom = zoomer.getContext('2d');
+          zoomer.width = img.offsetWidth;
+          zoomer.height = img.offsetHeight;
+          ctxzoom.fillStyle = "white";
+          ctxzoom.fillRect(0, 0, img.offsetWidth, img.offsetHeight);
+          ctxzoom.drawImage(
+            img,
+            0, 0, img.naturalWidth, img.naturalHeight,
+            0, 0, img.offsetWidth, img.offsetHeight
+          );
+          
+          function draw(ctx, size){
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, size, size);
+            var rect = {
+              x: mask.offsetLeft - img.offsetLeft,
+              y: mask.offsetTop - img.offsetTop,
+              width: 256,
+              height: 256
+            };
+            ctx.drawImage(zoomer, rect.x, rect.y, rect.width, rect.height, 0, 0, size, size);
+          }
+          draw($("#canvas-256").dom.getContext('2d'), 256);
+          draw($("#canvas-128").dom.getContext('2d'), 128);
+        }
+        
+        vx.resetclip = function() {
+          var img = this.img;
+          var mask = this.mask;
+          var clip = {
+            top: 0,
+            left: 0,
+            right: 96,
+            bottom: 96
+          };
+          clip.left = mask.offsetLeft - img.offsetLeft;
+          clip.top = mask.offsetTop - img.offsetTop;
+          clip.right = clip.left + mask.offsetWidth;
+          clip.bottom = clip.top + mask.offsetHeight;
+          img.style.clip = "rect(" + clip.top + "px " + clip.right + "px " + clip.bottom + "px " + clip.left + "px)";
+        }
+
+        vx.resetfull = function() {
+          var img = this.img;
+          var full =$("#full").dom;
+          full.style.width = img.offsetWidth + "px";
+          full.style.height = img.offsetHeight + "px";
+          full.style.top = img.offsetTop + "px";
+          full.style.left = img.offsetLeft + "px";
+        }
+
+        vx.setimg = function(n) {
+          var img = this.img;
+          var mask = this.mask;
+          if (n.width) {
+            if (n.width <= mask.offsetWidth) {
+              n.width = mask.offsetWidth;
+            }
+            img.style.width = n.width + "px";
+            img.style.height = "auto";
+          }
+
+          if (n.height) {
+            if (n.height <= mask.offsetHeight) {
+              n.height = mask.offsetHeight;
+            }
+            img.style.width = "auto";
+            img.style.height = n.height + "px";
+          }
+
+          if (n.x >= mask.offsetLeft) {
+            n.x = mask.offsetLeft;
+          }
+          if (n.x <= mask.offsetLeft - (img.offsetWidth - mask.offsetWidth)) {
+            n.x = mask.offsetLeft - (img.offsetWidth - mask.offsetWidth);
+          }
+
+          if (n.y >= mask.offsetTop) {
+            n.y = mask.offsetTop;
+          }
+          if (n.y <= mask.offsetTop - (img.offsetHeight - mask.offsetHeight)) {
+            n.y = mask.offsetTop - (img.offsetHeight - mask.offsetHeight);
+          }
+
+          img.style.top = n.y + "px";
+          img.style.left = n.x + "px";
+
+          this.resetfull();
+          this.resetclip();
+          this.drawavatar();
+        }
+        vx.center = {};
+        vx.zoom = function(delta){
+          var n = {
+            x: 0,
+            y: 0,
+            width: null,
+            height: null
+          };
+          var center = this.center;
+          var img = this.img;
+          if (img.naturalWidth <= img.naturalHeight) {
+            n.width = (img.offsetWidth * delta);
+          }
+          else {
+            n.height = (img.offsetHeight * delta);
+          }
+          n.x = center.x + ((img.offsetLeft - center.x) * delta);
+          n.y = center.y + ((img.offsetTop - center.y)* delta);          
+          this.setimg(n);      
+        }
+        
+        vx.load = function() {
+          var me = this;
+          var doc = $(document);
+          var drag = false;
+          var start = {
+            x: 0,
+            y: 0,
+            left: 0,
+            top: 0
+          };
+          var box = $("#box");
+          var img = this.img;
+          var mask = this.mask;
+          var center = {
+            x: mask.offsetLeft + Math.floor(mask.offsetWidth/2),
+            y: mask.offsetTop + Math.floor(mask.offsetHeight/2)
+          };
+          this.center = center;
+          $("#mask").on("mousedown", function(evt) {
+            drag = true;
+            start.x = evt.clientX;
+            start.y = evt.clientY;
+            start.left = img.offsetLeft;
+            start.top = img.offsetTop;
+            box.dom.style.cursor = "move";
+          });
+
+          box.on("mousewheel", function(evt) {
+            me.zoom(evt.wheelDelta < 0? 0.9:1.1);
+          });
+
+          doc.on("mousemove", function(evt) {
+            if (drag) {
+              var delta = {
+                x: evt.clientX - start.x,
+                y: evt.clientY - start.y
+              };
+              n = {
+                x: start.left + delta.x,
+                y: start.top + delta.y,
+                width: null,
+                height: null
+              };
+              me.setimg(n);
+            }
+          });
+
+          doc.on("mouseup", function(evt) {
+            drag = false;
+            box.dom.style.cursor = "default";
+          });
+          
+          doc.on("keydown", function(evt) {
+            var code = evt.keyCode;
+            switch(evt.keyCode){
+              case 38: {
+                me.zoom(1.1);
+                break;
+              }
+              case 40: {
+                me.zoom(0.9);
+                break;
+              }
+            }
+          });
+          $("#local").on("change", function(){
+            me.loadlocal(this.files.item(0));
+          });
+        }
+
+        vx.reload = function(url, callback) {
+          var me = this;
+          var img = this.img;
+          var mask = this.mask;
+          img.onload = function() {
+            var full = $("#full").dom;
+            if (this.naturalWidth <= this.naturalHeight) {
+              this.style.width = this.naturalWidth + "px";
+              this.style.height = "auto";
+            }
+            else {
+              this.style.width = "auto";
+              this.style.height = this.naturalHeight + "px";
+            }
+            this.style.left = (mask.offsetLeft - ((this.offsetWidth - mask.offsetWidth) / 2)) + "px";
+            this.style.top = (mask.offsetTop - ((this.offsetHeight - mask.offsetHeight) / 2)) + "px";
+
+            full.onload = function() {
+              me.resetfull();
+              me.resetclip();
+              me.drawavatar();
+              if(typeof(callback)=="function"){
+                callback();
+              }
+            }
+            full.src = this.src;
+          }
+          img.onerror = function() {
+            this.src = "./img/opacity.png";
+          }
+          img.src = url;
+        }
+        
+        vx.reset = function(){
+          var me = this;
+          var img = this.img;
+          var mask = this.mask;
+          if (img.naturalWidth <= img.naturalHeight) {
+            img.style.width = img.naturalWidth + "px";
+            img.style.height = "auto";
+          }
+          else {
+            img.style.width = "auto";
+            img.style.height = img.naturalHeight + "px";
+          }
+          img.style.left = (mask.offsetLeft - ((img.offsetWidth - mask.offsetWidth) / 2)) + "px";
+          img.style.top = (mask.offsetTop - ((img.offsetHeight - mask.offsetHeight) / 2)) + "px";
+          
+          this.resetfull();
+          this.resetclip();
+          this.drawavatar();
+        }
+        
+        vx.loadlocal = function(file){
+          var dataurl =  window.URL.createObjectURL(file);
+          var text = $('#url').dom;
+          text.value= file.name;
+          this.reload(dataurl, function(){
+            window.URL.revokeObjectURL(dataurl);
+          });
+        }
+        
+        vx.save = function(){
+          var canvas = $("#canvas").dom;
+          var img = canvas.toDataURL("image/png");
+          window.open(img);
+        }      
+        
+        vx.load();
+      }();
+
+
+    </script>
+  </body>
+</html>
