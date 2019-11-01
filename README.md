@@ -14,4 +14,4 @@ since 2017-07-04.
   --Robert Frost  
   
 --------------------------------------------------------------
-  - [Start](https://me.bimwook.com){:target="_blank"}
+  - [Start](https://me.bimwook.com)
