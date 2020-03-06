@@ -4,25 +4,24 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="Content-Security-Policy" content="default-src data: 'self' 'unsafe-inline' 'unsafe-eval';">
-    <title>hotznn.omuen.com</title>
+    <title>HOME</title>
     <style type="text/css">
       * {
         box-sizing: border-box;
       }
       html {
         height: 100%;
-        overflow: hidden;
         font-size: 16px;
         background-color: white;
         overflow: hidden;
       }
       body {
         margin: 0;
+        padding: 0;
         height: 100%;
-        font-family: verdana, "Microsoft Yahei";
         background-color: white;
         overflow: hidden;
-        padding: 0 0 0 0;
+        font-family: verdana, "Microsoft Yahei";
       }
       
       header {
@@ -30,7 +29,6 @@
         padding: 0 1em;
         height: 2em;
         line-height: 2em;
-        margin-top: -2em;
         padding-left: 4em;
         background-color: #383838;
       }
@@ -54,16 +52,18 @@
       .omuen {
         width: 100%;
         height: 100%;
-        padding-left: 3em;
+        padding-left: 6em;
       }
 
       .side {
-        width: 3em;
+        width: 5em;
         float:left;
+        margin: 0;
+        padding: 0;
         height: 100%;
         overflow: hidden;
-        margin-left: -3em;
-        background-color: #363636;
+        margin-left: -6em;
+        background-color: rgba(0,0,0,0.08);
       }
       .main {
         margin:0;
@@ -72,11 +72,43 @@
         overflow: hidden;
         overflow-y: scroll;
       }
+      
+      .listview {
+        margin: 0;
+        padding: 0;
+        user-select:none;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -o-user-select:none;
+        -ms-user-select:none;
+      }
+      .listview .item {
+        cursor: pointer;
+        margin: 0.5em 0;
+        padding: 0;
+        font-size: 0.8em;
+        text-align: center;
+        line-height: 2.5;
+      }
+      .listview .item:hover {
+        background-color: rgba(0,0,0,0.03);      
+      }
+      .listview .item:active {
+        background-color: rgba(0,0,0,0.08);      
+      }
+      
     </style>
   </head>
   <body>
     <div class="omuen">
-      <div class="side"></div>
+      <div class="side">
+        <em></em>
+        <dl class="listview">
+          <dd class="item">HOME</dd>
+          <dd class="item">导航</dd>
+          <dd class="item">收藏</dd>
+        </dl>
+      </div>
       <div class="main"></div>
     </div>
     <script type="text/javascript">
