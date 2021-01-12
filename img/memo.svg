@@ -1,10 +1,54 @@
 <svg fill="silver" viewBox="0 0 2960 2100" xmlns="http://www.w3.org/2000/svg">
   <rect stroke="white" stroke-width="0.2" fill="none" width="100%" height="100%"></rect>
   <path d="M1480 60 L1480 2040" stroke-dasharray="8,8" stroke="gray" stroke-width="1" fill="none" />
-  <g transform="translate(0,0)">
-    <path d="M60 60 L1420 60 L1420 2040 L60 2040 Z" stroke="gray" stroke-width="1" fill="none" />
+  <g transform="translate(0,0)"> 
+    <path d="M60 60 L1420 60 L1420 2040 L60 2040 Z" stroke="gray" stroke-width="1" fill="none" stroke-dasharray="2,2"/>
+    <path d="M120 320 L1360 320" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 400 L1360 400" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 480 L1360 480" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 560 L1360 560" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 640 L1360 640" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 720 L1360 720" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 800 L1360 800" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 880 L1360 880" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 960 L1360 960" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1040 L1360 1040" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1120 L1360 1120" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1200 L1360 1200" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1280 L1360 1280" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1360 L1360 1360" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1440 L1360 1440" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1520 L1360 1520" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1600 L1360 1600" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1680 L1360 1680" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1760 L1360 1760" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1840 L1360 1840" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1920 L1360 1920" stroke="gray" stroke-width="2" fill="none" />
   </g>
-  <g transform="translate(1480,0)" style="font-size:30px; font-family: verdana;">
-    <path d="M60 60 L1420 60 L1420 2040 L60 2040 Z" stroke="gray" stroke-width="1" fill="none" />    
+  <g transform="translate(1480,0)">
+    <path d="M60 60 L1420 60 L1420 2040 L60 2040 Z" stroke="gray" stroke-width="1" fill="none" stroke-dasharray="2,2"/>
+    <path d="M120 160 L1360 160" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 240 L1360 240" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 320 L1360 320" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 400 L1360 400" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 480 L1360 480" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 560 L1360 560" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 640 L1360 640" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 720 L1360 720" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 800 L1360 800" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 880 L1360 880" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 960 L1360 960" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1040 L1360 1040" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1120 L1360 1120" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1200 L1360 1200" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1280 L1360 1280" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1360 L1360 1360" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1440 L1360 1440" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1520 L1360 1520" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1600 L1360 1600" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1680 L1360 1680" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1760 L1360 1760" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M120 1840 L1360 1840" stroke="gray" stroke-width="2" fill="none" />
+    <path d="M1000 1980 L1300 1980" stroke="gray" stroke-width="2" fill="none" />
   </g>
 </svg>
