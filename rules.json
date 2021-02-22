@@ -1,0 +1,191 @@
+[
+  {
+    "name": "sinaimg.cn",
+    "items":[
+      {"reg": "sinaimg.cn/.*/", "value": "sinaimg.cn/large/"},
+      {"reg": "\\?.*", "value": ""}
+    ]
+  },
+  {
+    "name": "weibo.com",
+    "items":[
+      {"reg": "sinaimg.cn/.*/", "value": "sinaimg.cn/large/"},
+      {"reg": "\\?.*", "value": ""}
+    ]
+  },
+  {
+    "name": "lofter.com",
+    "items":[
+      {"reg": "\\?.*", "value": ""}
+    ]
+  },
+  {
+    "name": "127.net",
+    "items":[
+      {"reg": "\\?.*", "value": ""}
+    ]
+  },
+  {
+    "name": "lf127.net",
+    "items":[
+      {"reg": "\\?.*", "value": ""}
+    ]
+  },
+  {
+    "name": "126.net",
+    "items":[
+      {"reg": "\\?.*", "value": ""}
+    ]
+  },
+  {
+    "name": "tumblr.com",
+    "items":[
+      {"reg": "_\\d{3,}.", "value": "_1280."}
+    ]
+  },
+  {
+    "name": "shopify.com",
+    "items":[
+      {"reg": "\\?v=\\d*", "value": ""},
+      {"reg": "_\\d+x\\d+", "value": ""},
+      {"reg": "_grande", "value": ""},
+      {"reg": "_small", "value": ""},
+      {"reg": "_large", "value": ""},
+      {"reg": "_\\d*x", "value": ""}
+    ]
+  },
+  {
+    "name": "shopflynation.com",
+    "items":[
+      {"reg": "\\?v=\\d*", "value": ""},
+      {"reg": "_\\d+x\\d+", "value": ""},
+      {"reg": "_grande", "value": ""},
+      {"reg": "_small", "value": ""},
+      {"reg": "_large", "value": ""},
+      {"reg": "_\\d*x", "value": ""}
+    ]
+  },
+  {
+    "name": "shopifycdn.net",
+    "items":[
+      {"reg": "\\?v=\\d*", "value": ""},
+      {"reg": "_\\d+x\\d+", "value": ""},
+      {"reg": "_grande", "value": ""},
+      {"reg": "_small", "value": ""},
+      {"reg": "_large", "value": ""},
+      {"reg": "_\\d*x", "value": ""}
+    ]
+  },
+  {
+    "name": "alicdn.com",
+    "items":[
+      {"reg": "_\\.webp$", "value": ""},
+      {"reg": "_\\d{3}\\.", "value": "_1280."},
+      {"reg": "(_\\d{2,}x\\d{2,}.*)$", "value": ""},
+      {"reg": "(\\.\\d{2,}x\\d{2,}[^.]+)", "value": ""},
+      {"reg": "(_sum\\.jpg)$", "value": ""}
+    ]
+  },
+  {
+    "name": "asos-media.com",
+    "items":[
+      {"reg": "\\$XXL\\$.*$", "value": "$XXL$"},
+      {"reg": "&size=.*$", "value": ""}
+    ]
+  },
+  {
+    "name": "bigcartel.com",
+    "items":[
+      {"reg": "\\?.*", "value": ""}
+    ]
+  },
+  {
+    "name": "bigcommerce.com",
+    "items":[
+      {"reg": "\\?.*", "value": ""},
+      {"reg": "\\d+x\\d+", "value": "10000x10000"},
+      {"reg": "\\d+w", "value": "10000x10000"}
+    ]
+  },
+  {
+    "name": "zhimg.com",
+    "items":[
+      {"reg": "_[^.]{1,}", "value": ""},
+      {"reg": "/\\d+/", "value": "/"}
+    ]
+  },
+  {
+    "name": "ssl-images-amazon.com",
+    "items":[
+      {"reg": "\\._.+jpg$", "value": ".jpg"}
+    ]
+  },
+  {
+    "name": "media-amazon.com",
+    "items":[
+      {"reg": "\\._.+jpg$", "value": ".jpg"}
+    ]
+  },
+  {
+    "name": "baidu.com",
+    "items":[
+      {"reg": "/w[^/]+/sign=[^/]+/", "value": "/pic/item/"}
+    ]
+  },
+  {
+    "name": "twimg.com",
+    "items":[
+      {"reg": "&name=.+$", "value": "&name=orig"}
+    ]
+  },
+  {
+    "name": "ltwebstatic.com",
+    "items":[
+      {"reg": "_thumbnail_\\d+x\\d*\\.webp$", "value": ".jpg"},
+      {"reg": "\\.webp$", "value": ".jpg"}
+    ]
+  },
+  {
+    "name": "shein.com",
+    "items":[
+      {"reg": "_thumbnail_\\d+x\\d*\\.webp$", "value": ".jpg"},
+      {"reg": "\\.webp$", "value": ".jpg"}
+    ]
+  },
+  {
+    "name": "cloudfront.net",
+    "items":[
+      {"reg": "small|medium|large", "value": "original"}
+    ]
+  },
+  {
+    "name": "prettylittlething.com",
+    "items":[
+      {"reg": "\\?.*$", "value": ""}
+    ]
+  },
+  {
+    "name": "doubanio.com",
+    "items":[
+      {"reg": "\\.webp$", "value": ".jpg"}
+    ]
+  },
+  {
+    "name": "gamersky.com",
+    "items":[
+      {"reg": "_S.jpg$", "value": ".jpg"}
+    ]
+  },
+  {
+    "name": "wixstatic.com",
+    "items":[
+      {"reg": "/v1/fill/.*$", "value": ""}
+    ]
+  },
+  {
+    "name": "squarespace-cdn.com",
+    "items":[
+      {"reg": "format=\\d+w$", "value": "format=2500w"}
+    ]
+  }
+]
