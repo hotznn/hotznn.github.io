@@ -51,6 +51,7 @@
       {"reg": "_grande", "value": ""},
       {"reg": "_small", "value": ""},
       {"reg": "_large", "value": ""},
+      {"reg": "_crop_center", "value": ""},
       {"reg": "_\\d*x", "value": ""}
     ]
   },
@@ -62,6 +63,7 @@
       {"reg": "_grande", "value": ""},
       {"reg": "_small", "value": ""},
       {"reg": "_large", "value": ""},
+      {"reg": "_crop_center", "value": ""},
       {"reg": "_\\d*x", "value": ""}
     ]
   },
@@ -73,6 +75,9 @@
       {"reg": "_grande", "value": ""},
       {"reg": "_small", "value": ""},
       {"reg": "_large", "value": ""},
+      {"reg": "_crop", "value": ""},
+      {"reg": "_center", "value": ""},
+      {"reg": "_compact", "value": ""},
       {"reg": "_\\d*x", "value": ""}
     ]
   },
@@ -167,6 +172,7 @@
   {
     "name": "doubanio.com",
     "items":[
+      {"reg": "/status/[^/]+/public/", "value": "/status/o/public/"},
       {"reg": "\\.webp$", "value": ".jpg"}
     ]
   },
@@ -186,6 +192,18 @@
     "name": "squarespace-cdn.com",
     "items":[
       {"reg": "format=\\d+w$", "value": "format=2500w"}
+    ]
+  },
+  {
+    "name": "meipian.me",
+    "items":[
+      {"reg": "\\?.*$", "value": ""}
+    ]
+  },
+  {
+    "name": "pddpic.com",
+    "items":[
+      {"reg": "\\?.*$", "value": ""}
     ]
   }
 ]
