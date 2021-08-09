@@ -1,13 +1,19 @@
 /*!
  * https://www.bimwook.com/
  *
- * Copyright (c) 2016-2018 Yangbo
+ * Copyright (c) 2016-2020 Yangbo
  *
  * Date: 2018-01-03 16:00:00 +0800
  * Revision: 2.0
+ *
+ * Date: 2021-07-13 16:00:00 +0800
+ * Revision: 2.1
  */
+ 
 !function(woo){
   var marked = {};
+  marked.version = "v2.1";
+  marked.memo = "";
   marked.encode = function(s){
     return s.replace(/&/g, '&amp;').replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   };
@@ -20,16 +26,18 @@
           var mcs = (data||"").match(this.regex);
           if(!mcs) break;
           var alt = (mcs[1]||"");
-          var v = {id: Math.random().toString(36), value: '<img src="' + marked.encode(mcs[2]) + '" alt="' + marked.encode(alt) + '" />'};
+          var v = {
+            id: Math.random().toString(36) + Math.random().toString(36), 
+            value: '<img src="' + marked.encode(mcs[2]) + '" alt="' + marked.encode(alt) + '" />'
+          };
           if(alt=="video"){
             v.value= '<video src="' + marked.encode(mcs[2]) + '"></video>';
           }
           else if(alt=="audio"){
             v.value= '<audio src="' + marked.encode(mcs[2]) + '"></audio>';
           }
-          
           cache.push(v);
-          data = data.replace(this.regex, "<!--%" + v.id + "%-->");
+          data = data.replace(this.regex, "<!--#" + v.id + "#-->");
         }
         return data;
       }
@@ -41,7 +49,10 @@
         while(true){
           var mcs = (data||"").match(this.regex);
           if(!mcs) break;
-          var v = {id: Math.random().toString(36), value: '<a target="_blank" href="' + marked.encode(mcs[2]) + '" title="' + marked.encode(mcs[3]||"") + '">' + marked.encode(mcs[1]) + '</a>'};
+          var v = {
+            id: Math.random().toString(36) + Math.random().toString(36), 
+            value: '<a target="_blank" href="' + marked.encode(mcs[2]) + '" title="' + marked.encode(mcs[3]||"") + '">' + marked.encode(mcs[1]) + '</a>'
+          };
           cache.push(v);          
           data = data.replace(this.regex, "<!--%" + v.id + "%-->");
         }
@@ -50,12 +61,27 @@
     },
     {
       name: "blockquote",
-      regex: /^> ([^\n]+)/,
+      regex: /^>[ 銆€]([^\n]+)/,
+      execute: function(data, cache){
+        var d = (data||"").replace("&gt;", ">");
+        while(true){
+          var mcs = d.match(this.regex);
+          if(!mcs) break;
+          var s = '<dd>' + mcs[1] + '</dd>';        
+          data = d.replace(this.regex, s);
+          d = data;
+        }
+        return data;
+      }
+    },
+    {
+      name: "li",
+      regex: /^-[ 銆€]([^\n]+)/,
       execute: function(data, cache){
         while(true){
           var mcs = (data||"").match(this.regex);
           if(!mcs) break;
-          var s = '<blockquote>' + mcs[1] + '</blockquote>';        
+          var s = '<li>' + mcs[1] + '</li>';        
           data = data.replace(this.regex, s);
         }
         return data;
@@ -77,7 +103,7 @@
     },
     {
       name: "hr",
-      regex: /^( *[-*_]){3,} *(\n+|$)/,
+      regex: /^( *[-=*_]){3,} *(\n+|$)/,
       execute: function(data, cache){
         while(true){
           var mcs = (data||"").match(this.regex);
@@ -139,7 +165,7 @@
         for(var i=0; i<mcs.length; i++){
           var mc = mcs[i];
           var text = (mc + "").replace(/(^\s*)|(\s*$)/g, "");
-          if(text.indexOf("<h")>-1 || text.indexOf("<img ")>-1 || text.indexOf("<blockquote")>-1){
+          if(text.indexOf("<h")>-1 || text.indexOf("<!--#")>-1 || text.indexOf("<dd")>-1 || text.indexOf("<li")>-1) {
             lines.push(text);
           }
           else{
@@ -154,11 +180,45 @@
   marked.parse = function(data, indent){
     var fn = {};
     var ret = [];
+    var idt = (indent||"");
     fn.lines = data.replace(/\r/g, "").split('\n');
     fn.cache = [];
     if(!fn.lines) return "";
-    for(var i=0; i<fn.lines.length; i++){
+    var islist = false;
+    var isquote = false;
+    fn.lines.push("");
+    //console.log(fn.lines.join("\r\n"));
+    for(var i=0; i<fn.lines.length; i++) {
       var line = (fn.lines[i]).replace(/(^\s*)|(\s*$)/g, "");
+
+      //List
+      if(line.match(/^-[ 銆€].+$/)){
+        if(!islist){
+          ret.push(idt + "<ul>");
+        }
+        islist = true;
+      }
+      else {
+        if(islist){
+          ret.push(idt + "</ul>");        
+        }
+        islist = false;
+      }
+      
+      //Quote
+      if(line.replace("&gt;",">").match(/^>[ 銆€].+$/)){
+        if(!isquote){
+          ret.push(idt + '<dl class="quote">');
+        }
+        isquote = true;
+      }
+      else {
+        if(isquote){
+          ret.push(idt + "</dl>");        
+        }
+        isquote = false;
+      }      
+
       if(line){
         for(var rr=0; rr<this.items.length; rr++){
           var reg = this.items[rr];
@@ -167,38 +227,46 @@
         }
       }
       else {
-        line = "<p>　</p>";
+        line = "<p>銆€</p>";
+      }
+      
+      
+      if(line.indexOf("<li>")>-1){
+        line = "  " + line;
+      }
+      else if(line.indexOf("<dd>")>-1) {
+        line = "  " + line;      
       }
       //console.log(line);
-      ret.push((indent||"") + line);
+      ret.push(idt + line);
     }
+    ret.pop();
     var text = ret.join("\r\n");
     for(var i=0; i<fn.cache.length; i++){
       var v = fn.cache[i];
       text = text.replace("<!--%" + v.id + "%-->", v.value);
+      text = text.replace("<!--#" + v.id + "#-->", v.value);
     }
-    //console.log(text);
-    //console.log(ret.join(''));
     return text;
   };
   woo.add("marked", marked);
   woo.end();  
 }({
-  modules: [],
-  add: function(name, module){
-    this.modules.push({name: name, module: module});
-  },
-  end: function(){
-    window.modules = window.modules||{};
-    for(var i=0; i<this.modules.length; i++){
-      var m = this.modules[i];
-      window.modules[m.name] = m.module;
-    }
-    if(window.Modules && window.Modules.add){
+    modules: [],
+    add: function(name, module){
+      this.modules.push({name: name, module: module});
+    },
+    end: function(){
+      window.modules = window.modules||{};
       for(var i=0; i<this.modules.length; i++){
         var m = this.modules[i];
-        window.Modules.add(m.name, m.module);
+        window.modules[m.name] = m.module;
+      }
+      if(window.Modules && window.Modules.add){
+        for(var i=0; i<this.modules.length; i++){
+          var m = this.modules[i];
+          window.Modules.add(m.name, m.module);
+        }
       }
     }
-  }
 });
