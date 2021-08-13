@@ -20,8 +20,19 @@
         ret.push(0xC0 | ((code >> 6) & 0x1F));
         ret.push(0x80 | (code & 0x3F));
       }
-      else if ((code >= 0x0800) && (code <= 0xFFFF)) {
+      else if ((code >= 0x0800) && (code <= 0xD7FF)) {
         ret.push(0xE0 | ((code >> 12) & 0x0F));
+        ret.push(0x80 | ((code >> 6) & 0x3F));
+        ret.push(0x80 | (code & 0x3F));
+      }
+      else if((code >= 0xD800) && (code <= 0xDBFF)) {
+        var extra = text.charCodeAt(i+1);
+        if ((extra & 0xFC00) == 0xDC00) {
+          i++;
+          code = ((code & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000;
+        }
+        ret.push(0xF0 | ((code >> 18) & 0x07));
+        ret.push(0x80 | ((code >> 12) & 0x3F));
         ret.push(0x80 | ((code >> 6) & 0x3F));
         ret.push(0x80 | (code & 0x3F));
       }
@@ -38,27 +49,37 @@
     var ret = [];
     var len = buffer.length;
     for (var i = 0; i < len; i++) {
-      var code = buffer[i];
-      if (((code >> 7) & 0xFF) == 0x0) {
+       var codes = [];
+       codes.push(buffer[i]);
+      if (((codes[0] >> 7) & 0xFF) == 0x0) {
         // 0xxxxxxx  
-        ret.push(String.fromCharCode(code));
-      } else if (((code >> 5) & 0xFF) == 0x6) {
+        ret.push(String.fromCharCode(codes[0]));
+      } 
+      else if (((codes[0] >> 5) & 0xFF) == 0x6) {
         // 110xxxxx 10xxxxxx  
-        var code2 = buffer[++i];
-        var utf16 = ((code & 0x1F) << 6) | (code2 & 0x3F);
+        codes.push(buffer[++i]);
+        var utf16 = ((codes[0] & 0x1F) << 6) | (codes[1] & 0x3F);
         ret.push(String.fromCharCode(utf16));
-      } else if (((code >> 4) & 0xFF) == 0xE) {
+      } 
+      else if (((codes[0] >> 4) & 0xFF) == 0xE) {
         // 1110xxxx 10xxxxxx 10xxxxxx  
-        var code2 = buffer[++i];
-        var code3 = buffer[++i];
-        var utf16 = (((code << 4) | ((code2 >> 2) & 0x0F) & 0x00FF) << 8)
-                    | (((code2 & 0x03) << 6) | (code3 & 0x3F));
+        codes.push(buffer[++i]);
+        codes.push(buffer[++i]);
+        var utf16 =  ((codes[0] & 0x0F) << 12) | ((codes[1]  & 0x3F)  << 6) |  (codes[2]  & 0x3F);
         ret.push(String.fromCharCode(utf16));
-      } else if (((code >> 3) & 0xFF) == 0x1E) {
+      } 
+      else if (((codes[0] >> 3) & 0xFF) == 0x1E) {
         // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  
-      } else if (((code >> 2) & 0xFF) == 0x3E) {
+        codes.push(buffer[++i]);
+        codes.push(buffer[++i]);
+        codes.push(buffer[++i]);
+        var utf16 = (((codes[0] & 0x07) << 18) | ((codes[1] & 0x3F) << 12) | ((codes[2] & 0x3F) << 06) | (codes[3] & 0x3F));
+        ret.push(String.fromCharCode(0xD800 | utf16 >>> 10 & 0x3F ) + String.fromCharCode(0xDC00 | utf16  & 0x3FF) );
+      } 
+      else if (((codes[0] >> 2) & 0xFF) == 0x3E) {
         // 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx  
-      } else if (((code >> 1) & 0xFF) == 0x7E) {
+      } 
+      else if (((codes[0] >> 1) & 0xFF) == 0x7E) {
         // 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx  
       }
     }
@@ -104,6 +125,7 @@
       if (c3 != '=') buffer.push(((fn.map[c2] << 4) & 0xff) | (fn.map[c3] >> 2));
       if (c4 != '=') buffer.push(((fn.map[c3] << 6) & 0xff) | fn.map[c4]);
     }
+    buffer.push("\r\n");
     return buffer;
   };
 
