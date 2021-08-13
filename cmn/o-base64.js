@@ -49,8 +49,8 @@
     var ret = [];
     var len = buffer.length;
     for (var i = 0; i < len; i++) {
-       var codes = [];
-       codes.push(buffer[i]);
+      var codes = [];
+      codes.push(buffer[i]);
       if (((codes[0] >> 7) & 0xFF) == 0x0) {
         // 0xxxxxxx  
         ret.push(String.fromCharCode(codes[0]));
