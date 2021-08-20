@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src data: 'self' 'unsafe-inline' 'unsafe-eval';">
+    <title>HOME</title>
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        height: 100%;
+        font-size: 16px;
+        background-color: white;
+        overflow: hidden;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-size: 16px;
+        background-color: white;
+        overflow: hidden;
+        font-family: verdana, "Microsoft Yahei";
+      }
+      
+      header {
+        color: #EAEAEA;
+        padding: 0 1em;
+        height: 2em;
+        line-height: 2em;
+        padding-left: 4em;
+        background-color: #383838;
+      }
+      
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        color: #006291;
+      }
+      a:link {
+        color: #006291;
+      }
+      a:visited {
+        color: #006291;
+      }
+      a:hover {
+        text-decoration: none;
+        color: #FF6633;
+      }
+
+      .omuen {
+        width: 100%;
+        height: 100%;
+        padding-left: 5em;
+      }
+
+      .side {
+        width: 5em;
+        float:left;
+        margin: 0;
+        padding: 1em 0;
+        height: 100%;
+        overflow: hidden;
+        margin-left: -5em;
+        border-right: solid 1px silver;
+        background-color: rgba(0,0,0,0.08);
+      }
+      .main {
+        margin:0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
+      }
+      
+      .listview {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        
+        user-select:none;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -o-user-select:none;
+        -ms-user-select:none;
+      }
+      .listview .item {
+        cursor: pointer;
+        margin: 0.5em 0;
+        padding: 0;
+        font-size: 0.8em;
+        text-align: center;
+        line-height: 2.5;
+      }
+      .listview .item:hover {
+        background-color: rgba(0,0,0,0.03);      
+      }
+      .listview .item:active {
+        background-color: rgba(0,0,0,0.08);      
+      }
+      
+      .avator {
+        display: block;
+        margin: 0 auto;
+        width: 3em;
+        height: 3em;
+        border-radius: 1.5em;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="omuen">
+      <div class="side">
+        <img class="avator" src="./img/hotznn.svg" alt="avator" />
+        <dl class="listview">
+          <dd class="item">封面</dd>
+          <dd class="item">导航</dd>
+          <dd class="item">收藏</dd>
+        </dl>
+      </div>
+      <div class="main"></div>
+    </div>
+    <script type="text/javascript">
+      -function(w){
+        var $ = function(id){
+          return {
+            dom: document.querySelector(id),
+            html: function(data){
+              var me = this;
+              if(typeof(data)=="string"){
+                me.dom.innerHTML = data;
+              }
+              else {
+                return me.dom.innerHTML;
+              }
+            },
+            text: function(data){
+              var me = this;
+              if(typeof(data)=="string"){
+                me.dom.innerText = data;
+              }
+              else {
+                return me.dom.innerText;
+              }
+            },
+            append: function(node){
+              this.dom.appendChild(node);
+            }
+          }
+        };
+      }(window);
+    </script>
+  </body>
+</html>
