@@ -14,25 +14,35 @@
     for (var i = 0; i < len; i++) {
       var code = text.charCodeAt(i);
       if ((code > 0x0000) && (code <= 0x007F)) {
+        //第一平面
         ret.push(code);
       }
       else if ((code >= 0x0080) && (code <= 0x07FF)) {
+        //第一平面
         ret.push(0xC0 | ((code >> 6) & 0x1F));
         ret.push(0x80 | (code & 0x3F));
       }
       else if ((code >= 0x0800) && (code <= 0xD7FF)) {
+        //第一平面
         ret.push(0xE0 | ((code >> 12) & 0x0F));
         ret.push(0x80 | ((code >> 6) & 0x3F));
         ret.push(0x80 | (code & 0x3F));
       }
-      else if((code >= 0xD800) && (code <= 0xDBFF)) {
+      else if((code >= 0xD800) && (code <= 0xDBFF)) { 
+        //辅助平面
         var extra = text.charCodeAt(i+1);
-        if ((extra & 0xFC00) == 0xDC00) {
+        if ((extra & 0xFC00) == 0xDC00) { //0xDC00 ~ 0xDFFF
           i++;
           code = ((code & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000;
         }
         ret.push(0xF0 | ((code >> 18) & 0x07));
         ret.push(0x80 | ((code >> 12) & 0x3F));
+        ret.push(0x80 | ((code >> 6) & 0x3F));
+        ret.push(0x80 | (code & 0x3F));
+      }
+      else if((code >= 0xE000) && (code <= 0xFFFF)) { 
+        //第一平面
+        ret.push(0xE0 | ((code >> 12) & 0x0F));
         ret.push(0x80 | ((code >> 6) & 0x3F));
         ret.push(0x80 | (code & 0x3F));
       }
