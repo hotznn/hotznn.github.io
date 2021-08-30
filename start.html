@@ -144,7 +144,6 @@
         vertical-align: middle;
         box-sizing: border-box;
       }
-
       @media screen and (max-width: 1023px) {
         ul li{
           margin: 0px;
@@ -349,7 +348,6 @@
         evt.target = null;
         evt.drag = false;
       }
-
       ui.drawitem = function(item, fixed){
         var me = this;
         var data = {rowid: item.rowid||"0", name: item.name||"无题", url: item.url||"about:blank"};
@@ -454,7 +452,6 @@
         }
         this.local.setItem('start.indexed', rowids.join('\n'));
       }
-
       ui.callback = function(o){
         var me = this;
         var uname = com.id("uname");
