@@ -227,7 +227,7 @@
           }
         };
         var vx = {};
-        vx.rowid="{{o.rowid}}";
+        vx.rowid="3747190261550890106031918791785008550726";
         vx.lazyload = {
           items: [],
           clear: function(){
@@ -244,7 +244,7 @@
               if((t>=top) && (t<=line)) {
                 img.onload = function(){
                   var src = this.attributes["data-src"];
-                  if(this.src.indexOf(src.value)>-1){
+                  if(this.src.indexOf(src.value.replace("../", "/"))>-1){
                     this.className = "o-normal";
                     this.onclick = function(){ window.open(this.src) };
                   }
