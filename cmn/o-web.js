@@ -48,14 +48,14 @@ void function(w){
       });
     };
     w.add("web", {
-      get: async function(url){
-        return await woo.go("GET", url, "");
+      get: function(url){
+        return woo.go("GET", url, "");
       },
-      post: async function(url, data){
-        return await woo.go("POST", url, data);
+      post: function(url, data){
+        return woo.go("POST", url, data);
       },
-      go: async function(method, url, data){
-        return await woo.go(method, url, data);
+      go: function(method, url, data){
+        return woo.go(method, url, data);
       },
       data: function(nv){
         var ret = {
@@ -84,12 +84,6 @@ void function(w){
       for(var i=0; i<this.modules.length; i++){
         var m = this.modules[i];
         window.modules[m.name] = m.module;
-      }
-      if(window.Modules && window.Modules.add){
-        for(var i=0; i<this.modules.length; i++){
-          var m = this.modules[i];
-          window.Modules.add(m.name, m.module);
-        }
       }
     }
   });
