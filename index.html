@@ -104,46 +104,6 @@
     </style>
   </head>
   <body>
-    <div class="omuen">
-      <div class="side">
-        <img class="avator" src="./img/hotznn.svg" alt="avator" />
-        <dl class="listview">
-          <dd class="item">封面</dd>
-          <dd class="item">导航</dd>
-          <dd class="item">收藏</dd>
-        </dl>
-      </div>
-      <div class="main"></div>
-    </div>
-    <script type="text/javascript">
-      -function(w){
-        var $ = function(id){
-          return {
-            dom: document.querySelector(id),
-            html: function(data){
-              var me = this;
-              if(typeof(data)=="string"){
-                me.dom.innerHTML = data;
-              }
-              else {
-                return me.dom.innerHTML;
-              }
-            },
-            text: function(data){
-              var me = this;
-              if(typeof(data)=="string"){
-                me.dom.innerText = data;
-              }
-              else {
-                return me.dom.innerText;
-              }
-            },
-            append: function(node){
-              this.dom.appendChild(node);
-            }
-          }
-        };
-      }(window);
-    </script>
+    hotznn.omuen.com
   </body>
 </html>
