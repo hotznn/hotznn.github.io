@@ -1,113 +1,873 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
-    <title>HOME</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>本地即时贴</title>
+    <link rel="stylesheet" type="text/css" href="./assets/common.css" />
     <style type="text/css">
-      * {
+      :root{
+        --woo-border-color: rgba(0,0,0,0.07);
+      }
+      *{
         box-sizing: border-box;
       }
-      html {
-        height: 100%;
+      html{
+        margin:0 auto;
+        padding:0;
         font-size: 16px;
-        background-color: white;
-        overflow: hidden;
+        background: gray;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        height: 100dvh;
       }
-      body {
+      body{
+        margin:0 auto;
+        padding:0;
+        text-align: center;
+        background: #EAEAEA;
+        height: 100dvh;
+      }
+      a {cursor: pointer; text-decoration: none; color:#006291;}
+      a:link {color:#006291;}
+      a:visited {color:#006291;}
+      a:hover{ text-decoration: none; color: #FF6633;}
+      em {
+        font-style: normal;
+      }
+      .wo-container {
+        margin: 0px auto;
+        padding: 0;
+        text-align: center;
+        background: #EAEAEA;
+        overflow: hidden;
+        width:100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .wo-header{
+        color: white;
+        width: 100%;
+        height: 3rem;
         margin: 0;
         padding: 0;
-        height: 100%;
-        font-size: 16px;
-        background-color: white;
+        display: flex;
+        flex-direction: row;
+        background-color: #646464;
         overflow: hidden;
+        align-items: center;
+        justify-content: center;
+      }
+      .wo-main {
+        flex: 1;
+        height: 0;
+        width: 100%;
+      }
+      .wo-icon {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .wo-icon-button {
+        width: 3rem;
+        height: 3rem;
+        padding: 8px;
+        display: inline-block;
+      }
+      .wo-icon-button:active{
+        background-color: rgba(0,0,0,0.12);
+      }
+      .wo-header-title{
+        cursor: default;
+        width: 0;
+        height: 3rem;
+        line-height: 3rem;
+        flex: 1;
+        user-select: none;
+        display: inline-block;
+        text-align: center;
+        font-weight: normal;
+        font-size: 0.875em;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        transition: all 0.3s ease-out;
         font-family: verdana, "Microsoft Yahei";
       }
-      header {
-        color: #EAEAEA;
-        padding: 0 1em;
-        height: 2em;
-        line-height: 2em;
-        padding-left: 4em;
-        background-color: #383838;
+      .mx-toolbar {
+        margin: 0 auto;
+        padding: 1px;
+        width: 100%;
+        gap: 1px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        overflow: hidden;
+        user-select: none;
+        box-sizing: border-box;
+        border: none;
+        background-color: #EAEAEA;
       }
-      em,b,i {
-        font-style: normal;
-        font-weight: normal;
-      }
-      a {
+      .mx-toolbar a {
+        color: gray;
         cursor: pointer;
-        text-decoration: none;
-        color: #006291;
+        display: block;
+        gap: 4px;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        border: none;
+        overflow: hidden;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        transition: all 0.3s ease;
+        background-color: rgba(255,255,255,0.8);
       }
-      a:link {
-        color: #006291;
+      .mx-toolbar a:hover {
+        background-color: rgba(255,255,255,1);
       }
-      a:visited {
-        color: #006291;
+      .mx-toolbar a:active {
+        background-color: rgba(255,255,255,0);
       }
-      a:hover {
-        text-decoration: none;
-        color: #FF6633;
-      }
-      .omuen {
+      .wo-content{
         width: 100%;
         height: 100%;
-        padding-left: 5em;
+        border: none;
+        box-sizing: border-box;
+        padding: 8px;
+        font: normal 1em/1.618 verdana;
+        -webkit-overflow-scrolling: touch;
       }
-      .side {
-        width: 5em;
-        float:left;
-        margin: 0;
-        padding: 1em 0;
-        height: 100%;
-        overflow: hidden;
-        margin-left: -5em;
-        border-right: solid 1px silver;
-        background-color: rgba(0,0,0,0.08);
-      }
-      .main {
-        margin:0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        overflow-y: scroll;
-      }
-      .listview {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        user-select:none;
-        -webkit-user-select:none;
-        -moz-user-select:none;
-        -o-user-select:none;
-        -ms-user-select:none;
-      }
-      .listview .item {
-        cursor: pointer;
-        margin: 0.5em 0;
-        padding: 0;
-        font-size: 0.8em;
+      .mx-button {
+        color: #808080;
+        gap: 8px;
+        padding: 0.4em 1.2rem;
+        border: solid 1px rgba(0,0,0,0.05);
+        outline: none;
         text-align: center;
-        line-height: 2.5;
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 5px;
+        overflow: hidden;
+        line-height: 1.5rem;
+        margin: 0 0.2rem;
+        font-size: 0.9rem;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
         transition: all 0.3s ease-out;
+        font-family: verdana, "Source Han Sans CN", "Microsoft Yahei";
       }
-      .listview .item:hover {
+      .mx-button:hover {
+        color: #008080;
+        background-color: rgba(0,128,128,0.03);
+      }
+      .mx-button:active {
+        color: #008080;
+        background-color: rgba(0,0,0,0.05);
+      }
+      .mx-name {
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        overflow: hidden;
+        word-break: keep-all;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+      }
+      a.mx-name {
+        color: gray;
+      }
+      .mx-note {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .mx-text {
+        flex: 1;
+        border: solid 1px #EAEAEA;
+        padding: 0.5em 1em;
+        border-radius: 5px;
+      }
+      .mx-x1 {
+        color: gray;
+        flex:1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: nowrap;
+        padding: 0 8px;
+      }
+      .mx-data {
+        flex: 1;
+        width: 100%;
+        height: 0;
+        padding: 8px 16px;
+        display: block;
+        border: none 1px var(--woo-border-color);
+        line-height: 36px;
+        font-size: 1rem;
+        -webkit-appearance: none;
+        background-position: 0 8px;
+        background-size: 100% 36px;
+        background-repeat: repeat-y;
+        background-attachment: local;
+        background-image: linear-gradient(to bottom, var(--woo-border-color) 1px, white 1px);
+        font-family: "Microsoft Yahei";
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      }
+      .mx-container {
+        flex:1;
+        width: 100%;
+        height: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+      }
+      .mx-scrollbox {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
+        overflow: hidden scroll;
+      }
+      .mx-scrollbox-item {
+        cursor: pointer;
+        display: block;
+        margin: 0;
+        padding: 8px 1em;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        transition: background-color 0.3s ease-out;
+      }
+      .mx-scrollbox-item:hover {
+        background-color: rgba(128,128,128,0.03);
+      }
+      .mx-scrollbox-item::before {
+        content: "「";
+      }
+      .mx-scrollbox-item::after {
+        content: "」";
+      }
+      .mx-scrollbox-item:hover::before {
+        content: "［";
+      }
+      .mx-scrollbox-item:hover::after {
+        content: "］";
+      }
+      .mx-notebar {
+        padding: 8px;
+        gap: 8px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        min-height: 32px;
+        user-select: none;
         background-color: rgba(0,0,0,0.03);
       }
-      .listview .item:active {
+      .mx-notebar-icon {
+        margin: 0;
+        padding: 6px;
+        color: silver;
+        cursor: pointer;
+        border-radius: 5px;
+        border: solid 1px #DDDDDD;
+        background-color: white;
+        transition: all 0.3s ease-out;
+        display: block;
+      }
+      .mx-notebar-icon:hover {
+        color: gray;
+        background-color: white;
+      }
+      .mx-notebar-icon:active {
+        color: gray;
         background-color: rgba(0,0,0,0.08);
       }
-      .avator {
+      .mx-notebar-icon svg {
+        width: 16px;
+        height: 16px;
         display: block;
-        margin: 0 auto;
-        width: 3em;
-        height: 3em;
-        border-radius: 1.5em;
+      }
+      .mx-notebar-icon-team {
+        display: flex;
+        gap: 1px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        border: solid 1px #DDDDDD;
+        background-color: #DDDDDD;
+        flex-direction: row;
+        align-items: center;
+      }
+      .mx-notebar-icon-team .mx-notebar-icon{
+        margin: 0;
+        border: none;
+        border-radius: 0;
+      }
+      .mx-icon {
+        width: 16px;
+        height: 16px;
+        display: block;
+      }
+      .mx-icon svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .mx-tab-row {
+        width: 100%;
+        display: flex;
+        gap: 1px;
+        min-height: 42px;
+        padding: 8px 0 0 0;
+        align-items: center;
+        background-color: rgba(0,0,0,0.03);
+      }
+      .mx-tab-list {
+        display: flex;
+        gap: 1px;
+        align-items: center;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        scrollbar-width: none;
+      }
+      .mx-tab-list::-webkit-scrollbar {
+        display: none;
+      }
+      .mx-tab {
+        color: #808080;
+        cursor: pointer;
+        display: flex;
+        flex: 0 0 auto;
+        position: relative;
+        border: solid 1px rgba(0,0,0,0);
+        border-bottom: none;
+        background-color: rgba(0,0,0,0.05);
+        padding: 4px 4px 4px 12px;
+        border-radius: 8px 8px 0 0;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        user-select: none;
+        transition: all 0.2s ease-out;
+      }
+      .mx-tab:hover {
+        color:black;
+        background-color: rgba(0,0,0,0.1);
+      }
+      .mx-tab.active {
+        color: #008080;
+        background-color: white;
+        border: solid 1px rgba(0,0,0,0.16);
+        border-bottom: none;
+      }
+      .mx-tab-close {
+        opacity: 0.6;
+        cursor: pointer;
+        padding: 0;
+        user-select: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: background-color 0.2s ease-out;
+      }
+      .mx-tab-close:hover {
+        opacity: 1;
+        background-color: rgba(0,0,0,0.1);
+      }
+      .mx-tab-add {
+        cursor: pointer;
+        margin: 0 8px;
+        user-select: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        flex: 0 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease-out;
+      }
+      .mx-tab-add:hover {
+        background-color: #d2d5d9;
+      }
+      .mx-toast {
+        color: teal;
+        min-height: 64px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: larger;
+        background-color: #00808020;
+      }
+      .mx-mono-box {
+        flex: 1 1 0%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: rgba(255,255,255,0.8);
+      }
+      #indicator {
+        color: gray;
+        padding: 0 16px;
+        line-height: 32px;
+        font-family: "Courier New", monospace, verdana;
+      }
+      #mono {
+        flex: 1;
+        display: block;
+        padding: 0 1em;
+        width: 0;
+        text-align: center;
+        font-size: 12px;
+        cursor: default;
+        overflow: hidden;
+        word-break: keep-all;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        transition: all 0.3s ease-out;
+      }
+      .mx-mono-hidden {
+        color: rgba(0, 0, 0, 0);
+      }
+      .mx-mono-show {
+        color: rgba(0, 0, 0, 0.6);
+      }
+      ::-webkit-scrollbar {
+        width: 0.25rem;
+        height: 0.25rem;
+      }
+      ::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: rgba(0,0,0,0.2);
+      }
+      ::-webkit-scrollbar-track {
+        border-radius: 0;
+        background: rgba(0,0,0,0.01);
+      }
+      ::scrollbar {
+        width: 0.25rem;
+        height: 0.25rem;
+      }
+      ::scrollbar-thumb {
+        border-radius: 5px;
+        background: rgba(0,0,0,0.2);
+      }
+      ::scrollbar-track {
+        border-radius: 0;
+        background: rgba(0,0,0,0.01);
+      }
+      ::selection {
+        color: teal;
+        background-color: rgba(0,0,0,0.2);
+      }
+      @media screen and (max-width: 640px) {
+        .mx-non-mobile {
+          display: none;
+        }
+        a.mx-non-mobile {
+          display: none;
+        }
+        #mono {
+          display: none;
+        }
+        .mx-button {
+          flex-direction: column;
+        }
+        .mx-button .mx-icon{
+          display: none;
+        }
+        .mx-data {
+          font-size: 1rem;
+          padding: 8px 16px;
+        }
+        .hide-in-mobile{
+          display: none;
+        }
+      }
+      [v-cloak] {
+        display: none;
+      }
+      #view {
+        max-width: 880px;
+        background-color: white;
       }
     </style>
+    <script type="text/javascript" src="./assets/vue-min-2.js"></script>
   </head>
   <body>
-    <em>hotznn.omuen.com</em>
-    <script type="text/javascript" src="https://www.bimwook.com/woo/bin/events/web.js"></script>
+    <div class="wo-container" v-cloak id="view">
+      <div class="mx-note">
+        <div class="mx-tab-row">
+          <div class="mx-tab-list" @wheel.prevent="onwheel">
+            <div class="mx-tab" v-for="tab in tabs.items" v-bind:class="{'active': tab.rowid==id}">
+              <em class="title" v-on:click="load(tab.rowid)">{{tab.name}}</em>
+              <em class="mx-tab-close" v-on:click="remove(tab.rowid)">
+                <svg class="mx-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"/>
+                </svg>
+              </em>
+            </div>
+          </div>
+          <div class="mx-tab-add" @click="add">
+            <svg class="mx-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M11 13H6q-.425 0-.712-.288T5 12t.288-.712T6 11h5V6q0-.425.288-.712T12 5t.713.288T13 6v5h5q.425 0 .713.288T19 12t-.288.713T18 13h-5v5q0 .425-.288.713T12 19t-.712-.288T11 18z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mx-container">
+          <div v-cloak class="mx-toolbar">
+            <a href="javascript:;" v-on:click="wehot()">图片</a>
+            <a class="mx-non-mobile" href="javascript:;" v-on:click="cmd(Const_EditorAction.ACTION_INDENT)">首行缩进</a>
+            <a href="javascript:;" v-on:click="cmd(Const_EditorAction.ACTION_DELETE_BLANKS)">删除空行</a>
+            <a class="mx-non-mobile" href="javascript:;" v-on:click="cmd(Const_EditorAction.ACTION_BLANKS)">首尾空行</a>
+            <a href="javascript:;" v-on:click="cmd(Const_EditorAction.ACTION_BUILD)">自动排版</a>
+            <div class="mx-mono-box">
+              <em id="mono" v-bind:class="status?'mx-mono-show':'mx-mono-hidden'">{{mono}}</em>
+            </div>
+          </div>
+          <textarea class="mx-data" v-model="content" placeholder="写点什么..."></textarea>
+          <div class="mx-notebar">
+            <button class="mx-button hide-in-mobile" v-on:click="markdown()">
+              <svg class="mx-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V5a2 2 0 0 0-2-2m0 16H5V7h14zm-7-8.5c1.84 0 3.48.96 4.34 2.5c-.86 1.54-2.5 2.5-4.34 2.5s-3.48-.96-4.34-2.5c.86-1.54 2.5-2.5 4.34-2.5M12 9c-2.73 0-5.06 1.66-6 4c.94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 5.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5"/>
+              </svg>
+              <em>预览</em>
+            </button>
+            <button class="mx-button" v-on:click="mem()">
+              <i class="mx-icon">
+                <svg v-show="buttons.mem.status==1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7 5C7 3.34315 8.34315 2 10 2H19C20.6569 2 22 3.34315 22 5V14C22 15.6569 20.6569 17 19 17H17V19C17 20.6569 15.6569 22 14 22H5C3.34315 22 2 20.6569 2 19V10C2 8.34315 3.34315 7 5 7H7V5ZM9 7H14C15.6569 7 17 8.34315 17 10V15H19C19.5523 15 20 14.5523 20 14V5C20 4.44772 19.5523 4 19 4H10C9.44772 4 9 4.44772 9 5V7ZM5 9C4.44772 9 4 9.44772 4 10V19C4 19.5523 4.44772 20 5 20H14C14.5523 20 15 19.5523 15 19V10C15 9.44772 14.5523 9 14 9H5Z" fill="currentColor"></path>
+                </svg>
+                <svg v-show="buttons.mem.status==0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"/>
+                </svg>
+              </i>
+              <em>{{buttons.mem.status==1?'复制':'已复制'}}</em>
+            </button>
+            <button v-show="false" class="mx-button" v-on:click="save()">
+              <i class="mx-icon">
+                <svg v-show="buttons.save.status==1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+                  <path fill="currentColor" d="M7 19v-6h10v6h2V7.828L16.172 5H5v14zM4 3h13l4 4v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 12v4h6v-4z"/>
+                </svg>
+                <svg v-show="buttons.save.status==0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"/>
+                </svg>
+              </i>
+              <em>{{buttons.save.status==1?'保存':'已保存'}}</em>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module">
+      import { web, hot } from "./woo.js";
+      import marked from "./modules/marked.js";
+      import { WooStore } from "./modules/store.js";
+      import { editor as Editor, Const_EditorAction } from "./modules/editor.js";
+      const Store = await WooStore('woo-sticker',1, [
+        { name: 'meta', keyPath: ['mod','name'] },
+        { name: 'stickers', keyPath: ['rowid'] }
+      ]);
+      const RowidColor = ()=>{
+        let hash = 0;
+        for (let i = 0; i < id.length; i++) {
+          hash = id.charCodeAt(i) + ((hash << 5) - hash);
+          hash |= 0;
+        }
+        const hue = Math.abs(hash) +10 % 360;
+        return `hsl(${hue}, 100%, 96%)`;
+      };
+      ((Woo)=>{
+        const encoder = hot.text.encoder;
+        const decoder = hot.text.decoder;
+        const INDENT = "\u3000\u3000";
+        const view = new Vue({
+          el: "#view",
+          data: {
+            id: "",
+            idx: -1,
+            vid: 0,
+            name: "woo.sticker",
+            color: "white",
+            fontsize: "1em",
+            title: "",
+            content: "",
+            html: "",
+            mono: "你会不会突然地出现 在街角的咖啡店",
+            monox: "",
+            toast: {
+              text: "保存成功",
+              visiable: false
+            },
+            member: {uid: "0000000000", name: ""},
+            tabs: {
+              selected: "",
+              items: []
+            },
+            buttons:{
+              save: { status: 1 },
+              wash: { status: 1 },
+              mem: { status: 1 },
+              clear: { status: 1 }
+            },
+            status: 1,
+            Const_EditorAction: Const_EditorAction
+          },
+          mounted(){
+            let me = this;
+            this.id = decoder.url((window.location.hash.match(/\#id=(\d{57})/)||["",""])[1]);
+            this.name = "sticker";
+            web.get("./assets/o-view.html").then(o=>{
+              this.html = o.text;
+            });
+            Store.ks('stickers').then(o=>{
+              this.tabs.items = o.map(row=>{ return { rowid: row.join(''), name: "即时贴" } });
+              this.tabs.selected = this.tabs.items.find(tab=>tab.rowid==this.id);
+              //console.log(this.tabs.selected);
+              if(this.tabs.items.length==0){
+                this.add();
+              }
+              else {
+                if(!this.tabs.selected){
+                  this.tabs.selected = this.tabs.items[this.tabs.items.length-1];
+                  this.id = this.tabs.selected.rowid;
+                }
+                this.load(this.id);
+              }
+            });
+            document.addEventListener("keydown", function (event) {
+              if ((event.ctrlKey || event.metaKey) && event.key === "s") {
+                me.save();
+                event.preventDefault();
+              }
+            });
+            window.onhashchange = ()=>{
+              this.id = decoder.url((window.location.hash.match(/\#id=(\d{57})/)||["",""])[1]);
+              this.load(this.id);
+            };
+            document.querySelector(".mx-data").addEventListener('input', () => {
+              Store.save('stickers', { rowid: this.id, name: this.titlex(), content: this.content });
+            });
+          },
+          methods: {
+            rndid(){
+              return (new Date()).getTime();
+            },
+            cmd(v) {
+              let x = Editor.actions.find(act => act.id == v) || {
+                id: -1,
+                name: "无效操作",
+                action: (text) => { return text; }
+              };
+              if (x) {
+                this.content = x.action(this.content);
+                Store.save('stickers', { rowid: this.id, name: this.titlex(), content: this.content });
+              }
+            },
+            wehot() {
+              let ret = [];
+              ret.push(this.content);
+              ret.push("　　![mono](./assets/ai-20260127-0629.jpg)");
+              this.content = ret.join("\r\n");
+            },
+            reload(){
+              return Store.ks('stickers').then(o=>{
+                this.tabs.items = o.map(row=>{ return { rowid: row.join(''), name: "即时贴" } });
+                this.tabs.selected = this.tabs.items.find(tab=>tab.rowid==this.id) || this.tabs.items[ this.idx==-1? (this.tabs.items.length-1):this.idx];
+                if(this.tabs.selected){
+                  this.id = this.tabs.selected.rowid;
+                  this.idx = this.tabs.items.indexOf(this.tabs.selected);
+                }
+                else if(this.tabs.items.length){
+                  this.idx = this.tabs.items.length-1;
+                  this.tabs.selected = this.tabs.items[this.idx];
+                  this.id = this.tabs.selected.rowid;
+                }
+                else {
+                  this.idx = -1;
+                  this.id = hot.now("yyyymmddhhnnsszzz") + hot.uuid();
+                }
+              });
+            },
+            load(v){
+              let me = this;
+              me.title = "未命名即时贴";
+              me.content = "";
+              me.color = "silver";
+              this.tabs.selected = this.tabs.items.find(tab=>tab.rowid==v) || this.tabs.items[ this.idx==-1 ? (this.tabs.items.length-1):this.idx ];
+              if(this.tabs.selected){
+                this.idx = this.tabs.items.indexOf(this.tabs.selected);
+              }
+              Store.load('stickers', [v]).then(o=>{
+                me.color = "white";
+                if(o){
+                  me.content = o.content;
+                }
+                window.location.replace("#id=" + v);
+              });
+            },
+            add(){
+              this.id = hot.now("yyyymmddhhnnsszzz") + hot.uuid();
+              this.content = "";
+              return Store.save('stickers', { rowid: this.id, name: this.titlex(), content: this.content }).then(()=>{
+                this.reload().then(()=>{
+                  this.load(this.id)
+                });
+              });
+            },
+            clear(){
+              this.content = "";
+            },
+            mem(){
+              navigator.clipboard.writeText(this.content).then(() => {
+                this.buttons.mem.status=0;
+                window.setTimeout(()=>{
+                  this.buttons.mem.status=1;
+                },700);
+              }).catch(err => {
+                this.showtoast("复制失败" + err);
+              });
+            },
+            titlex(){
+              let regex = /^(#{1,6}) {0,}([^\n]+?) *#* *(?:\n+|$)/;
+              let ret="";
+              let min = 7;
+              let lines = (this.content||"").replace(/\r/g,"").split("\n");
+              for(let i=0; i<lines.length; i++){
+                let line = (lines[i]||"").replace(/(^\s*)|(\s*$)/g, "");
+                let mcs = line.match(regex);
+                if(mcs){
+                  let len = (mcs[1]).length;
+                  if(len<min){
+                    ret = mcs[2];
+                    min = len;
+                  }
+                }
+              }
+              if(ret.trim()==""){
+                let txt = (this.content||"").replace(/\r/g, "");
+                let p = txt.indexOf("\n");
+                if(p!=-1){
+                  ret = txt.slice(0,p);
+                }
+                else {
+                  ret = txt;
+                }
+                if(ret.length>100){
+                  let pp = ret.indexOf(".");
+                  if(pp!=-1){
+                    ret = ret.slice(0,pp);
+                  }
+                  else {
+                    const x = new Intl.Segmenter('en', { granularity: 'grapheme' });
+                    ret = [...x.segment(ret)].map(s => s.segment).slice(0,100).join('');
+                  }
+                }
+              }
+              return ret.trim() || ("Sticker ~ " + hot.now());
+            },
+            markdown(){
+              const me = this;
+              const rowid = this.id;
+              let title = this.titlex();
+              let content = marked.build(hot.text.encoder.html(this.content),'      ');
+              content = content.replace(/ class="md-media-loader"/g,"");
+              content = content.replace(/<img src=/g, '<img class="mx-load" src="./assets/nil.svg" data-src=');
+              let list = [
+                { regex:/\{\{o-rowid\}\}/g, value: `Sticker#${rowid}` },
+                { regex:/\{\{o-title\}\}/g, value: title },
+                { regex:/\{\{o-site-author\}\}/g, value: me.member.name },
+                { regex:/\{\{o-site-name\}\}/g, value: "woo:sticker" },
+                { regex:/\{\{o-created\}\}/g, value: hot.now().slice(0,16) },
+                { regex:/\{\{o-name-cn\}\}/g, value: me.member.name },
+                { regex:/\{\{o-name-en\}\}/g, value:  me.member.uid },
+                { regex:/\{\{o-mx-source\}\}/g, value: `woo://mod/sticker/md-view.do?name=${this.name}&rowid=${rowid}` },
+                //{ regex:/\{\{o-mx-mono\}\}/g, value: `Sticker: ${this.name}#${rowid}` },
+                { regex:/[ ]*\{\{o-content\}\}[ ]*/g, value: content }
+              ];
+              let html = this.html;
+              for(let i=0; i<list.length; i++){
+                let r = list[i];
+                html = html.replace(r.regex, r.value);
+              }
+              const win = window.open("about:blank");
+              win.document.write(html);
+              win.document.close();
+            },
+            showtoast(text){
+              this.toast.text = text;
+              this.toast.visiable = true;
+              window.setTimeout(()=>{
+                this.toast.text = "";
+                this.toast.visiable = false;
+              },1500);
+            },
+            save(){
+              let me = this;
+              Store.save('stickers', { rowid: this.id, name: this.titlex(), content: this.content }).then(()=>{
+                this.reload();
+                this.buttons.save.status=0;
+                window.setTimeout(()=>{
+                  this.buttons.save.status=1;
+                },700);
+              });
+            },
+            remove(id){
+              this.content = "";
+              Store.remove('stickers', [ id ]).then(()=>{
+                this.reload().then(()=>{
+                  if(this.tabs.items.length==0){
+                    this.add();
+                  }
+                  else {
+                    this.load(this.id);
+                  }
+                })
+              });
+            },
+            kdown(evt) {
+              let me = this;
+              if(evt.ctrlKey && (evt.keyCode==83)){
+                me.save();
+                evt.preventDefault();
+              }
+            },
+            onwheel(evt){
+              const tablist = document.querySelector(".mx-tab-list");
+              tablist.scrollLeft += evt.deltaY
+            }
+          }
+        });
+      })({ "version": "1.0" });
+    </script>
   </body>
 </html>

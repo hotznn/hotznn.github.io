@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Book Reader</title>
+    <style type="text/css">
+      * { box-sizing: border-box; }
+      :root {
+        --woo-title-size: 24px;
+        --woo-content-size: 16px;
+      }
+      html {
+        margin:0;
+        padding:0;
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        overflow: hidden;
+      }
+      body {
+        margin:0;
+        padding:0;
+        width: 100%;
+        height: 100%;
+        font-size: 1em;
+        font-family: verdana;
+        overflow: hidden;
+      }
+      video, img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+      header {
+        width: 100%;
+        display: flex;
+        color: rgba(0,0,0,0.6);
+        padding: 0 1em;
+        font-size: 1em;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        background-color: #00000008;
+      }
+      a {
+        cursor: pointer;
+        border: none;
+        padding: 0 1em;
+        color: rgba(250,250,250,0.8);
+        text-decoration: none;
+        transition: all 0.2s ease-out;
+      }
+      a:link {
+        color: rgba(250,250,250,0.8);
+      }
+      a:visited {
+        color: rgba(250,250,250,0.8);
+      }
+      a:hover {
+        color: rgba(250,250,250,1);
+        text-decoration: none;
+      }
+      a:active {
+        color: rgba(250,250,250,0.9);
+        text-decoration: none;
+      }
+      em {
+        font-style: normal;
+      }
+      video {
+        background-color: black;
+      }
+      .header-item {
+        display: block;
+        text-align: center;
+        height: 48px;
+        line-height: 48px;
+      }
+      .header-item-text {
+        flex:1;
+        height: 48px;
+        padding: 0 8px;
+        display: block;
+        text-align: left;
+        line-height: 48px;
+        overflow:hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+      }
+      .media-box {
+        flex: 1;
+        display: flex;
+        height: 0;
+        width: 100%;
+        flex-direction: row;
+        overflow: hidden auto;
+      }
+      .no-media {
+        width: 64px;
+        height: 64px;
+      }
+      .mx-side {
+        width: 320px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        background-color: white;
+      }
+      .mx-main {
+        width: 0;
+        height: 100%;
+        flex: 1;
+        overflow: hidden scroll;
+      }
+      .mx-max800 {
+        width: 100%;
+        padding: 2rem;
+        margin: 0 auto;
+        max-width: 800px;
+        min-height: 100%;
+        background-color: white;
+      }
+      .mx-listview {
+        margin:0;
+        padding:0;
+        width: 100%;
+        height: 0;
+        flex: 1;
+        overflow: hidden scroll;
+      }
+      .mx-item {
+        width: 100%;
+        position: relative;
+        color: #727272;
+        cursor: pointer;
+        margin: 0;
+        padding: 8px;
+        background: #FFFFFF;
+        display:block;
+        font-size: 0.8rem;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        height: 36px;
+        user-select: none;
+        transition: all 0.3s ease-out;
+        border-bottom: solid 1px rgba(0,0,0,0.06);
+        font-family: verdana, "Microsoft Yahei";
+      }
+      .mx-item.selected {
+        color: #008080;
+        background: #FFFDED;
+        outline: none;
+        text-shadow: 0px 0px 1px #BABABA;
+      }
+      .mx-item::after {
+        width: 0;
+        content: "";
+        transition: all 0.3s ease-out;
+      }
+      .mx-item.selected::after {
+        width: 0.8rem;
+        height: 0.8rem;
+        display: block;
+        content: "";
+        background-color: transparent;
+        background-position: center center;
+        background-repeat: no-repeat;
+        transition: all 0.3s ease-out;
+      }
+      .mx-item:hover {
+        color: black;
+        outline: none;
+        background-color: #80800010;
+      }
+      .mx-item:focus {
+        outline: none;
+      }
+      .mx-item:active {
+        outline: none;
+      }
+      .mx-title {
+        flex: 1;
+        overflow: hidden;
+        word-break: keep-all;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+      }
+      .mx-menu-title {
+        color: #808080;
+        width: 100%;
+        height: 48px;
+        line-height: 48px;
+        padding: 0 16px;
+        text-align: center;
+        background-color: #80808015;
+      }
+      #view {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        background-color: #00000008;
+      }
+      code {
+        display: block;
+        margin: 0;
+        width: 100%;
+        min-height: 26px;
+        padding: 0;
+        line-height: 1.75;
+        color: rgb(80,80,80);
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        font-family: verdana, "Microsoft Yahei", monospace;
+      }
+      #meta  {
+        border: none;
+      }
+      @keyframes kx-circle {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .x-circle {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        aspect-ratio: 16/9;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+      .x-circle::after {
+        width: 16px;
+        height: 16px;
+        display: block;
+        content: "";
+        border: 3px solid #aad4f5;
+        border-bottom-color: #0078d4;
+        overflow: hidden;
+        border-radius: 50%;
+        animation: kx-circle 1s linear infinite;
+      }
+      .x-receive {
+        width: 100%;
+        color: silver;
+        max-width: 800px;
+        margin: 2rem auto;
+        display: flex;
+        aspect-ratio: 16/9;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+        user-select: none;
+        transition: all 0.3s ease-out;
+        background-color: #FFFFFF60;
+      }
+      .canreceive {
+        color: black;
+        background-color: white;
+      }
+      .mx-nomore {
+        color: silver;
+        padding: 32px 16px;
+        text-align: center;
+      }
+      .x-menu {
+        padding-top: 8px;
+        font-size: var(--woo-content-size);
+      }
+      .x-normal {
+        font-size: var(--woo-content-size);
+      }
+      .x-title {
+        padding-top: 16px;
+        text-align: center;
+        font-size: var(--woo-title-size);
+      }
+      .x-selected {
+        color: rgb(255,80,80);
+      }
+      .mx-listview::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .mx-listview::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: rgba(0,0,0,0.2);
+      }
+      .mx-listview::-webkit-scrollbar-track {
+        border-radius: 0;
+        background: rgba(0,0,0,0.01);
+      }
+      .mx-listview::scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .mx-listview::scrollbar-thumb {
+        border-radius: 5px;
+        background: rgba(0,0,0,0.2);
+      }
+      .mx-listview::scrollbar-track {
+        border-radius: 0;
+        background: rgba(0,0,0,0.01);
+      }
+      .mx-item.x-title {
+        padding: 0;
+        text-align: center;
+        height: 48px;
+        line-height: 48px;
+        font-size: var(--woo-content-size);
+      }
+      .mx-item .x-icon {
+        color: silver;
+        width: 20px;
+        height: 20px;
+        display: block;
+      }
+      .mx-icon {
+        width: 32px;
+        height: 32px;
+        color: gray;
+        display: flex;
+        user-select: none;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        transition: all 0.3s ease-out;
+      }
+      .mx-icon:hover{
+        color: black;
+        background-color: #FFFFFF80;
+      }
+      .mx-icon:active{
+        color: black;
+        background-color: #00000020;
+      }
+      .mx-button {
+        color: #808080;
+        padding: 0.5rem 1.5rem;
+        border: solid 1px rgba(0,0,0,0.05);
+        outline: none;
+        text-align: center;
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0 0.1rem;
+        transition: all 0.3s ease-out;
+        font-family: verdana, "Source Han Sans CN", "Microsoft Yahei";
+      }
+      .mx-button:hover {
+        color: #008080;
+        background-color: rgba(0,128,128,0.03);
+      }
+      .mx-button:active {
+        color: #008080;
+        background-color: rgba(0,0,0,0.05);
+      }
+      .mx-button[disabled] {
+        color: silver;
+        background-color: rgba(0,0,0,0.07);
+      }
+      .mx-button[disabled]:hover {
+        color: silver;
+        background-color: rgba(0,0,0,0.07);
+      }
+      .mx-button[disabled]:active {
+        color: silver;
+        background-color: rgba(0,0,0,0.07);
+      }
+      .mx-button img {
+        float: left;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.5rem;
+      }
+      .woo-bookcase {
+        display: flex;
+        gap: 8px;
+        padding: 8px;
+        width: 100%;
+        flex: 1 1 0;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        flex-direction: row;
+        align-items: center;
+      }
+      .woo-book {
+        width: 200px;
+        min-height: 320px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 8px;
+        padding: 8px;
+        gap: 8px;
+        background-color: white;
+        transition: background 0.15s ease;
+      }
+      .woo-book:hover {
+        background: rgba(0, 120, 215, 0.15);
+      }
+      .woo-book svg {
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: rgba(0,0,0,0.17);
+        transition: background 0.3s ease;
+      }
+      .woo-book:hover svg {
+        background-color: rgba(0,128,128,0.7);
+      }
+      .woo-book .woo-book-title {
+        color: gray;
+        line-height: 1.3;
+        font-size: 12px;
+        max-height: 2.6em;
+        text-align: center;
+        word-break: break-word;
+        overflow: hidden;
+        transition: color 0.3s ease-out;
+      }
+      .woo-book:hover .woo-book-title {
+        color: black;
+      }
+      .woo-book .woo-book-remove {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        font-size: 12px;
+        line-height: 24px;
+        cursor: pointer;
+        display: none; /* 默认隐藏 */
+        padding: 0;
+      }
+      .woo-book .woo-book-remove:hover {
+        background: rgba(255, 0, 0, 0.8);
+      }
+      .woo-book:hover .woo-book-remove {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      @media screen and (max-width: 800px) {
+        #x-menu {
+          display: none;
+        }
+      }
+      @media screen and (max-width: 640px) {
+        #meta {
+          display: none;
+        }
+        #x-menu {
+          display: none;
+        }
+        .mx-max800 {
+          padding: 1rem;
+        }
+      }
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+    <script type="text/javascript" src="./lib/vue.js"></script>
+  </head>
+  <body>
+    <div v-cloak id="view">
+      <header v-cloak id="meta">
+        <i class="mx-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg" v-show="false">
+            <path fill="currentColor" d="M19.5 3h-15C3.122 3 2 4.121 2 5.5v13C2 19.879 3.122 21 4.5 21h15c1.378 0 2.5-1.121 2.5-2.5v-13C22 4.121 20.878 3 19.5 3zM4 18.5v-13c0-.275.224-.5.5-.5H11v14H4.5c-.276 0-.5-.225-.5-.5zm16 0c0 .275-.224.5-.5.5H13V5h6.5c.276 0 .5.225.5.5v13zM15 7h3v2h-3V7zm0 4h3v2h-3v-2z"></path>
+          </svg>
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" v-on:click="vid = 1-vid">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.85719 3H15.1428C16.2266 2.99999 17.1007 2.99998 17.8086 3.05782C18.5375 3.11737 19.1777 3.24318 19.77 3.54497C20.7108 4.02433 21.4757 4.78924 21.955 5.73005C22.2568 6.32234 22.3826 6.96253 22.4422 7.69138C22.5 8.39925 22.5 9.27339 22.5 10.3572V13.6428C22.5 14.7266 22.5 15.6008 22.4422 16.3086C22.3826 17.0375 22.2568 17.6777 21.955 18.27C21.4757 19.2108 20.7108 19.9757 19.77 20.455C19.1777 20.7568 18.5375 20.8826 17.8086 20.9422C17.1008 21 16.2266 21 15.1428 21H8.85717C7.77339 21 6.89925 21 6.19138 20.9422C5.46253 20.8826 4.82234 20.7568 4.23005 20.455C3.28924 19.9757 2.52433 19.2108 2.04497 18.27C1.74318 17.6777 1.61737 17.0375 1.55782 16.3086C1.49998 15.6007 1.49999 14.7266 1.5 13.6428V10.3572C1.49999 9.27341 1.49998 8.39926 1.55782 7.69138C1.61737 6.96253 1.74318 6.32234 2.04497 5.73005C2.52433 4.78924 3.28924 4.02433 4.23005 3.54497C4.82234 3.24318 5.46253 3.11737 6.19138 3.05782C6.89926 2.99998 7.77341 2.99999 8.85719 3ZM6.35424 5.05118C5.74907 5.10062 5.40138 5.19279 5.13803 5.32698C4.57354 5.6146 4.1146 6.07354 3.82698 6.63803C3.69279 6.90138 3.60062 7.24907 3.55118 7.85424C3.50078 8.47108 3.5 9.26339 3.5 10.4V13.6C3.5 14.7366 3.50078 15.5289 3.55118 16.1458C3.60062 16.7509 3.69279 17.0986 3.82698 17.362C4.1146 17.9265 4.57354 18.3854 5.13803 18.673C5.40138 18.8072 5.74907 18.8994 6.35424 18.9488C6.97108 18.9992 7.76339 19 8.9 19H9.5V5H8.9C7.76339 5 6.97108 5.00078 6.35424 5.05118ZM11.5 5V19H15.1C16.2366 19 17.0289 18.9992 17.6458 18.9488C18.2509 18.8994 18.5986 18.8072 18.862 18.673C19.4265 18.3854 19.8854 17.9265 20.173 17.362C20.3072 17.0986 20.3994 16.7509 20.4488 16.1458C20.4992 15.5289 20.5 14.7366 20.5 13.6V10.4C20.5 9.26339 20.4992 8.47108 20.4488 7.85424C20.3994 7.24907 20.3072 6.90138 20.173 6.63803C19.8854 6.07354 19.4265 5.6146 18.862 5.32698C18.5986 5.19279 18.2509 5.10062 17.6458 5.05118C17.0289 5.00078 16.2366 5 15.1 5H11.5ZM5 8.5C5 7.94772 5.44772 7.5 6 7.5H7C7.55229 7.5 8 7.94772 8 8.5C8 9.05229 7.55229 9.5 7 9.5H6C5.44772 9.5 5 9.05229 5 8.5ZM5 12C5 11.4477 5.44772 11 6 11H7C7.55229 11 8 11.4477 8 12C8 12.5523 7.55229 13 7 13H6C5.44772 13 5 12.5523 5 12Z" fill="currentColor"></path>
+          </svg>
+        </i>
+        <em class="header-item-text">{{meta.name}}</em>
+        <em v-show="false">
+          <i class="mx-icon" v-on:click="fontsize(-1)">
+            <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6h4m4 0h-4m0 0v12M4 11h3m3 0H7m0 0v7"/>
+            </svg>
+          </i>
+          <i class="mx-icon" v-on:click="fontsize(1)">
+            <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6h4m4 0h-4m0 0v12M4 11h3m3 0H7m0 0v7"/>
+            </svg>
+          </i>
+        </em>
+      </header>
+      <div v-cloak class="woo-bookcase" v-show="vid==0">
+        <div class="woo-book" v-for="book in books">
+          <svg v-on:click="load(book)" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="verdana" font-size="8" fill="#fff" font-weight="bold">Book</text>
+          </svg>
+          <em class="woo-book-title" v-on:click="load(book)">{{book.name}}</em>
+          <em class="woo-book-remove" v-on:click="remove(book)">×</em>
+        </div>
+        <div class="woo-book" v-on:click="select()">
+          <svg viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="verdana" font-size="16" fill="#fff" font-weight="bold">+</text>
+          </svg>
+          <em class="woo-book-title">导入</em>
+        </div>
+      </div>
+      <div v-cloak class="media-box" v-show="vid==1">
+        <div id="x-menu" class="mx-side" v-show="status.sidebar">
+          <div class="mx-menu-title">目录</div>
+          <ul class="mx-listview">
+            <li class="mx-item" v-for="m in book.menu" :key="m.rowid" v-bind:class="{ 'selected': book.selected==m }" v-on:click="show(m)">
+              <svg class="x-icon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24"  fill="currentColor">
+                <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/>
+              </svg>
+              <em class="mx-title" :title="m.name">{{m.name}}</em>
+            </li>
+            <li class="mx-nomore">
+              <small>没有更多了</small>
+            </li>
+          </ul>
+        </div>
+        <main class="mx-main">
+          <div class="x-circle" v-show="(rowid!='') && (!loaded)"></div>
+          <div v-show="loaded && (!canreceive)" class="mx-max800" v-bind:style="{'--woo-content-size': status.fontsize + 'px'}">
+            <svg v-show="book.name==book.selected.name" viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg">
+              <rect fill="#EAEAEA" width="100%" height="100%"></rect>
+              <text x="240" y="120" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333" text-anchor="middle">{{book.name}}</text>
+            </svg>
+            <article>
+              <code v-for="row in book.section" @click="rows.selected = row" v-bind:class="{'x-selected': rows.selected==row}">{{row}}</code>
+            </article>
+            <section style="padding: 8px; width: 100%; text-align: center;">
+              <button class="mx-button" v-on:click="next(-1)">上一章</button>
+              <button class="mx-button" v-on:click="next(1)">下一章</button>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script type="module">
+      import web from "./modules/web.js";
+      import hot from "./modules/hot.js";
+      import { WooStore } from "./modules/store.js";
+      const Store = await WooStore('woo-books',1, [
+        { name: 'meta', keyPath: ['mod','name'] },
+        { name: 'books', keyPath: ['bookid','name'] },
+        { name: 'content', keyPath: ['bookid','rowid'] }
+      ]);
+      const Match = (text, x, v)=>{
+        return ((text||"").match(x)||["",v])[1];
+      }
+      ((Meta)=>{
+        const view = new Vue({
+          el: "#view",
+          data:{
+            vid: 0,
+            rowid: "",
+            canreceive: false,
+            mime:"",
+            books:[],
+            status: {
+              sidebar: false,
+              fontsize: 16
+            },
+            loaded: false,
+            book: { name: "", menu:[], selected: { name: "" }, section:[] },
+            rows: {
+              selected: null
+            },
+            meta: {
+              bookid: "",
+              name: "---",
+              created:"---",
+              size:"0",
+              mime:"none"
+            }
+          },
+          mounted(){
+            const me = this;
+            this.reload();
+            Store.load("meta", ["woo-reader","current"]).then(o=>{
+              if(o && o.data){
+                this.load(o.data.book).then(()=>{
+                  let m = this.book.menu.find(x=>x.rowid==o.data.section);
+                  if(m){
+                    this.show(m);
+                  }
+                })
+              }
+            });
+            (()=>{
+              let root = document.body;
+              root.ondragenter = (e)=>{
+                me.canreceive = true;
+                e.preventDefault();
+              };
+              root.ondragover = (e)=>{
+                me.canreceive = true;
+                e.preventDefault();
+              };
+              root.ondragleave= (e)=>{
+                const related = e.relatedTarget;
+                if (!related || !document.body.contains(related)) {
+                  me.canreceive = false;
+                }
+                e.preventDefault();
+              };
+              root.ondrop = async (e)=>{
+                let files = e.dataTransfer.files;
+                e.preventDefault();
+                me.canreceive = false;
+                if(files.length==1){
+                  let doc = files[0];
+                  let item = await me.read(doc);
+                  if(item.mime.startsWith("text/")){
+                    this.bookid = "-";
+                    this.meta.name = item.name;
+                    this.meta.size = this.showsize( item.size );
+                    this.meta.created = hot.now();
+                    this.build(item.data.replace(/\r/g,""));
+                    document.title = item.name;
+                  }
+                }
+              };
+              document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                  this.next(-1);
+                }
+                else if (e.key === 'ArrowRight') {
+                  this.next(1);
+                }
+              });
+            })();
+          },
+          methods:{
+            build(text){
+              let rows = {  items: text.split("\n") };
+              this.book.menu = [];
+              this.book.section = [];
+              this.loaded = false;
+              let meta = {
+                bookid: hot.uuid(),
+                name: this.meta.name,
+                size: this.meta.size,
+                created: this.meta.created,
+                items: []
+              };
+              hot.wait(10).then(()=>{
+                this.status.sidebar = false;
+                let item = {
+                  bookid: meta.bookid,
+                  rowid: hot.uuid(),
+                  name: this.meta.name,
+                  text: []
+                };
+                let n = null;
+                meta.items.push({rowid: item.rowid, name: this.meta.name});
+                for(let i=0; i<rows.items.length; i++){
+                  let row = rows.items[i];
+                  if(row.match(/^\s*# (.+)$/)){
+                    Store.save('content', item);
+                    item = {
+                      bookid: meta.bookid,
+                      rowid: hot.uuid(),
+                      name:  row.replace(/^\s*# /,"").trim(),
+                      text: [row]
+                    };
+                    meta.items.push({ rowid: item.rowid, name: item.name });
+                  }
+                  else if(row.match(/^\s*## (.+)$/)){
+                    Store.save('content', item);
+                    item = {
+                      bookid: meta.bookid,
+                      rowid: hot.uuid(),
+                      name: row.replace(/^\s*## /,"").trim(),
+                      text: [row]
+                    };
+                    meta.items.push({ rowid: item.rowid, name: item.name });
+                  }
+                  else if(row.match(/^\s*第\s*\d+\s*章 (.+)$/)){
+                    Store.save('content', item);
+                    item = {
+                      bookid: meta.bookid,
+                      rowid: hot.uuid(),
+                      name: row.trim(),
+                      text: [row]
+                    };
+                    meta.items.push({ rowid: item.rowid, name: item.name });
+                  }
+                  else if(row.match(/^\s*(第\s*[0123456789一二三四五六七八九十百千万亿零两]+\s*[章回卷篇部集])(?:\s+(.+))?$/i)){
+                    Store.save('content', item);
+                    item = {
+                      bookid: meta.bookid,
+                      rowid: hot.uuid(),
+                      name: row.trim(),
+                      text: [row]
+                    };
+                    meta.items.push({ rowid: item.rowid, name: item.name });
+                  }
+                  else {
+                    item.text.push(row);
+                  }
+                }
+                Store.save('content', item);
+                Store.save('books', meta);
+                this.book.menu = meta.items;
+                this.book.section = item.text;
+                this.meta.bookid = meta.bookid;
+                this.status.sidebar = this.book.menu.length;
+                this.loaded = true;
+                this.reload();
+                this.vid = 1;
+              }).catch(e=>{
+
+              });
+            },
+            read(doc){
+              let me = this;
+              return new Promise((resolve, reject)=> {
+                let reader = new FileReader();
+                let item = {
+                  rowid: hot.uuid(),
+                  name: doc.name,
+                  extname: ((doc.name||"").match(/\.([^.]+)$/)||["","txt"])[1],
+                  mime: doc.type || "application/octet-stream",
+                  size: doc.size,
+                  total: doc.size,
+                  loaded: 0,
+                  done: false,
+                  data: null
+                };
+                reader.onload = (e)=> {
+                  item.data = e.target.result;
+                  resolve(item);
+                };
+                reader.readAsText(doc);
+              });
+            },
+            reload(){
+              this.books = [];
+              Store.ks("books").then(o=>{
+                this.books = o.map(row=>{ return { bookid: row[0], name: row[1] } });
+              })
+            },
+            load(book){
+              this.bookid = book.bookid;
+              //console.log(book);
+              return hot.tasks().then(()=>{
+                return Store.load("books", [book.bookid, book.name]);
+              }).then(o=>{
+                this.vid = 1;
+                this.book.name = book.name;
+                this.book.menu = o.items;
+                this.book.section = [];
+                this.meta.name = o.name;
+                this.meta.size = o.size;
+                this.meta.bookid = o.bookid;
+                this.loaded = true;
+                this.status.sidebar = this.book.menu.length;
+                this.book.selected = { name: "" };
+                return Store.load("meta", ["woo-book", book.bookid]);
+              }).then(o=>{
+                const oo = o || {section:""};
+                let m = this.book.menu.find(x=>x.rowid==oo.section);
+                if(m){
+                  this.show(m);
+                }
+              });
+            },
+            remove(book){
+              const db = Store.db;
+              const tx = db.transaction("content", "readwrite");
+              const store = tx.objectStore("content");
+              tx.oncomplete = ()=>{
+                hot.tasks().then(()=>{
+                  Store.remove("books", [book.bookid, book.name]);
+                }).then(()=>{
+                  Store.remove("meta", ["woo-book", book.bookid]);
+                }).then(()=>{
+                  this.reload();
+                }).catch(e=>{
+                  console.log(e);
+                });
+              };
+              tx.onerror = (e)=>{
+                console.log(e);
+              };
+              store.openCursor(IDBKeyRange.bound([book.bookid, ""], [book.bookid, "\uffff"])).onsuccess = e => {
+                const cursor = e.target.result;
+                if (!cursor) return;
+                cursor.delete();
+                cursor.continue();
+              };
+            },
+            select(){
+              let me = this;
+              let x = document.createElement("input");
+              x.setAttribute('type',"file");
+              x.setAttribute('name',"file");
+              x.setAttribute('accept',"text/plain");
+              x.onchange = async function(e){
+                for(let i=0; i<this.files.length; i++){
+                  let doc = this.files[i];
+                  let item = await me.read(doc);
+                  me.bookid = "-";
+                  me.meta.name = item.name;
+                  me.meta.size = me.showsize( item.size );
+                  me.meta.created = hot.now();
+                  me.build(item.data.replace(/\r/g,""));
+                  document.title = item.name;
+                }
+              };
+              x.click();
+            },
+            namev(data, name){
+              let reg = new RegExp((name||"") + ": (.+)", "m");
+              return ((data||"").match(reg)||["",""])[1];
+            },
+            showsize(size){
+              let units = ["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"];
+              if(!size){
+                  return "0 KB";
+              }
+              let s = parseFloat(size);
+              let idx = Math.floor(Math.log(s)/Math.log(1024));
+              let v = (s/Math.pow(1024,idx)).toFixed(2);
+              return v + ' ' + units[idx];
+            },
+            show(m){
+              let x = !!this.book.selected.name;
+              this.book.selected = m;
+              this.book.section = [];
+              Store.load('content', [this.meta.bookid, m.rowid]).then(o=>{
+                this.book.section = o.text;
+              });
+              Store.save('meta', {
+                mod: "woo-reader",
+                name: "current",
+                data:{
+                  book: { bookid: this.meta.bookid, name: this.meta.name },
+                  section: m.rowid
+                }
+              });
+              setTimeout(()=>{
+                let dom = document.querySelector("#x-menu .mx-item.selected");
+                if(dom){
+                  dom.scrollIntoView({ behavior: 'auto', block: x?'nearest':'start' });
+                }
+              }, 10);
+              Store.save('meta', {mod:"woo-book", name: this.meta.bookid, section: m.rowid});
+            },
+            next(v){
+              let idx = this.book.menu.indexOf(this.book.selected);
+              if (this.book.menu.length === 0) {
+                return -1;
+              }
+              if (v !== 1 && v !== -1) {
+                return -1;
+              }
+              let n = Math.max(0, Math.min(this.book.menu.length - 1, idx + v));
+              let m = this.book.menu[n];
+              this.show(m);
+            },
+            fontsize(v){
+              this.status.fontsize = this.status.fontsize + v;
+            },
+            win(url){
+              window.open(url);
+            }
+          }
+        });
+      })({ Version: "20260223" });
+    </script>
+  </body>
+</html>

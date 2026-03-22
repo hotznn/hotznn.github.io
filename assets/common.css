@@ -1,0 +1,102 @@
+*{
+  box-sizing: border-box;
+  font-family:  "verdana", "Microsoft Yahei";
+}
+@-moz-document url-prefix() {
+  * { scrollbar-width: thin; }
+}
+html{
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+div{
+  margin:0;
+  padding:0;
+}
+
+ul{
+  margin: 0;
+  padding: 0;
+  list-style:none;
+}
+
+img{
+  margin: 0;
+  padding: 0;
+  border: 0px;
+  vertical-align: middle;
+}
+
+input {
+  outline: none;
+  vertical-align: middle;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input[type="text"], input[type="password"]{
+  border: solid 1px #DDDDDD;
+}
+
+
+textarea {
+  resize: none;
+  outline: none;
+  border: solid 1px silver;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+form{
+  margin:0;
+  padding: 0;
+}
+
+hr {
+  height: 1px;
+  border: none 0 black;
+  color: silver;
+  background-color: silver;
+}
+
+button{
+  color: white;
+  margin:0;
+  padding:0 20px;
+  font: normal 14px/2 verdana;
+  border: solid 1px gray;
+  vertical-align: middle;
+  background: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button:focus{
+  outline: none;
+}
+
+input::-moz-focus-inner{border:0; padding:0}
+button::-moz-focus-inner{border:0; padding:0}
+
+h1{font-size:36px;}
+h2{font-size:24px;}
+h3{font-size:16px;}
+h4{font-size:14px;}
+h5{font-size:12px;}
+h6{font-size:10px;}
+
+a {
+  color: blue;
+  text-decoration: none;
+}
+a:link {color: blue;}
+a:visited {color: blue;}
+a:hover{ text-decoration: none; color: red;}

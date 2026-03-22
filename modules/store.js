@@ -57,6 +57,14 @@ const Module = {};
           x.onerror = () => reject(x.error);
         });
       },
+      async ks(name) {
+        const store = await this.getStore(name);
+        return new Promise((resolve, reject) => {
+          const x = store.getAllKeys();
+          x.onsuccess = () => resolve(x.result);
+          x.onerror = () => reject(x.error);
+        });
+      },
       async remove(name, rowid) {
         const store = await this.getStore(name, 'readwrite');
         return new Promise((resolve, reject) => {

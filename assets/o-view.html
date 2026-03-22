@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="no-referrer">
+    <meta name="mx-domain" content="omuen.com">
+    <meta name="mx-domain" content="bimwook.com">
+    <meta name="woo:source" content="{{o-rowid}}">
+    <meta name="woo:created" content="{{o-created}}">
+    <meta name="woo:author" content="{{o-site-author}}">
+    <meta name="woo:site-name" content="{{o-site-name}}">
+    <meta name="woo:cn-author" content="{{o-name-cn}}">
+    <meta name="woo:en-author" content="{{o-name-en}}">
+    <meta name="mx:source" content="{{o-mx-source}}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>{{o-title}}</title>
+    <style type="text/css">
+      * { box-sizing: border-box; }
+      html {
+        margin:0;
+        padding:0;
+        height: 100%;
+        font-size: 16px;
+        background-color: gray;
+      }
+      body {
+        margin:0 auto;
+        padding:0;
+        width: 100%;
+        min-height:100%;
+        max-width: 960px;
+        font-size: 1em;
+        line-height: 1.8;
+        overflow: auto;
+        background-color: white;
+        font-family: tahoma, verdana, "Microsoft Yahei";
+      }
+      img {
+        margin: 0 auto;
+        display:block;
+        max-width: 100%;
+        background-color: rgba(0,0,0,0.01);
+        border-radius: 5px;
+      }
+      h1,h2,h3,h4,h5,h6 {
+        margin:0;
+        padding: 8px 32px;
+        text-align: left;
+      }
+      h1 { font-size: 2.0em; border-bottom: solid 1px #EAEAEA; }
+      h2 { font-size: 1.8em; }
+      h3 { font-size: 1.6em; }
+      h4 { font-size: 1.4em; }
+      h5 { font-size: 1.2em; }
+      h6 { font-size: 1.0em; }
+      a {
+        color: #006090;
+        text-decoration: none;
+        transition: color 0.3s ease-out;
+      }
+      a:link { color: #006090; }
+      a:visited { color: #006090; }
+      a:hover { text-decoration: none; color: #FF6633; }
+      em { font-style: normal; font-weight: normal; }
+      hr {
+        margin: 0;
+        padding: 0;
+        border: none;
+        height: 1px;
+        background: #EAEAEA;
+      }
+      p { margin: 0.8em 0; padding: 0; text-indent: 2em; }
+      ul {
+        margin: 1em;
+        padding: 0;
+        padding-left: 2.5em;
+        list-style-type: disc;
+      }
+      li {
+        margin:0;
+        padding:0;
+      }
+      dl, dd {
+        margin:0;
+        padding:0;
+      }
+      section {
+        margin: 0;
+        padding: 0;
+        display: block;
+      }
+      @keyframes mx-load {
+        0% { background-color: rgb(200, 200, 200); }
+        50% { background-color: rgb(210, 210, 210); }
+        100% { background-color: rgb(200, 200, 200); }
+      }
+      .mx-load {
+        width: 100%;
+        height: auto;
+        margin: 1em auto;
+        background-image: url(./assets/nil.svg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 3rem 3rem;
+        animation-name: mx-load;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+      }
+      .mx-error {
+        width: auto;
+        height: auto;
+        margin: 1em auto;
+        background-color: rgba(250,250,250,0.8);
+      }
+      .mx-normal {
+        width: auto;
+        cursor: pointer;
+        background-color: rgba(250,250,250,1);
+      }
+      .md-blocks {
+        margin: 1em 2em;
+        padding: 0.5em 1em;
+        text-indent: 0;
+        border-left: solid 5px silver;
+        background-color: #EEEEEE;
+      }
+      .md-label {
+        color: gray;
+        padding: 4px;
+        font-size: 0.9em;
+        border: solid 1px silver;
+        border-radius: 3px;
+        background-color: #EEEEEE;
+        vertical-align: middle;
+      }
+      .md-italic {
+        font-style: italic;
+      }
+      .md-center {
+        text-align: center;
+      }
+      .md-media-audio {
+        display:block;
+      }
+      .md-media-video {
+        width: 100%;
+        display:block;
+      }
+      .mx-bar {
+        padding: 0 16px;
+        color: rgba(0,0,0,0.618);
+        height: 48px;
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        display: none;
+        background-color: rgba(200,200,200,0.618);
+      }
+      .mx-row {
+        margin: 0;
+        padding: 8px 16px;
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+      .mx-auto {
+        flex: 1;
+      }
+      .mx-center {
+        margin: 0;
+        color: silver;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+      .mx-text-center {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
+        text-align: center;
+      }
+      .mx-small {
+        color: silver;
+        font-size: 0.875em;
+      }
+      .mx-content {
+        color: #646464;
+        margin: 1em auto;
+        padding: 1em;
+        max-width: 800px;
+        font-size: 1rem;
+        text-align: justify;
+        line-height: 1.618;
+        background-color: white;
+        overflow: hidden;
+      }
+      .mx-link {
+        transition: all 0.3s ease-out;
+      }
+      #data { display: none; }
+      @media screen and (max-width: 639px) {
+        h1,h2,h3,h4,h5,h6 { text-align: left; }
+        #mono { display: none; }
+        #version { display: none; }
+      }
+      @media print {
+        h2 { page-break-before:always; }
+        .mx-bar { display: none; }
+        .mx-content{ padding: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="mx-row mx-small">
+      <em> Markdown viewer </em>
+      <em id="version"> | {{o-created}} </em>
+      <em class="mx-auto"></em>
+    </section>
+    <hr />
+    <article id="content" class="mx-content">
+      {{o-content}}
+    </article>
+    <hr />
+    <section class="mx-row">
+      <div id="mono" class="mx-small mx-auto"> {{o-mx-mono}} </div>
+      <div class="mx-small"> Since 2007, MIT </div>
+    </section>
+    <hr />
+    <script type="module">
+      (()=>{
+        const $ = (id)=>{
+          return document.querySelector(id);
+        };
+        const Rowid = "{{o-rowid}}";
+        const MX_SOURCE = $('meta[name="mx:source"]').content;
+        console.log(`Rowid: ${Rowid}`);
+        console.log(`mx-source: ${MX_SOURCE}`);
+        const Media = ()=>{
+          const observer = new IntersectionObserver(
+            (list)=>{
+              list.forEach(item => {
+                if (item.isIntersecting) {
+                  const img = item.target;
+                  img.src = img.dataset.src;
+                  observer.unobserve(img);
+                }
+              });
+            },
+            { threshold: 0.7, rootMargin: "32px" }
+          );
+          return {
+            loader(selector, onclick, onerror){
+              let x = selector || ".md-media-loader";
+              return {
+                list: [],
+                load(){
+                  this.list = Array.from(document.querySelectorAll(x));
+                  for(let i=0; i<this.list.length; i++){
+                    let media = this.list[i];
+                    media.onload = function(){
+                      this.className = "md-media-loaded";
+                    }
+                    media.onclick=function(){
+                      let me = this;
+                      let xx = typeof(onclick)=="function"?onclick:()=>{
+                        window.open(me.src);
+                      };
+                      xx(me);
+                    }
+                    media.onerror=function(e){
+                      let me = this;
+                      this.onclick = null;
+                      this.className = "md-media-loaded";
+                      let xx = typeof(onerror)=="function"?onerror:()=>{
+                        me.src="./assets/nil.svg";
+                      };
+                      xx(me,e);
+                    }
+                    observer.observe(media);
+                  }
+                },
+                unload(){
+                  for(let i=0; i<this.list.length; i++){
+                    let media = this.list[i];
+                    observer.unobserve(media);
+                  }
+                  this.list = [];
+                }
+              }
+            }
+          };
+        };
+        window.setTimeout(()=>{
+          let loader = Media().loader("#content img",()=>{});
+          loader.load();
+        }, 500);
+      })();
+    </script>
+  </body>
+</html>

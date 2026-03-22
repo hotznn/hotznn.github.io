@@ -32,6 +32,9 @@ const Woo = {};
           })
         ).catch(e=>{console.log(e)});
       },
+      tasks(){
+        return Promise.resolve({});
+      },
       utc8(){
         let d = new Date();
         let zone = 28800000; //8*3600e3;
